@@ -1,0 +1,23 @@
+.movieContainer{
+    padding: 0 1rem;
+}
+
+.movieArt{
+    width: 12.25rem;
+    height: 17.625rem;
+    border-radius: 10px;
+}
+.title{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    color: #FFFFFF;
+}
+.rating{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 19px;
+    color: #FFFFFF;
+}

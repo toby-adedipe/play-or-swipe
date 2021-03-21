@@ -1,0 +1,28 @@
+.header{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    padding: 1rem 0;
+}
+#logo{
+    font-style: normal;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 50px;
+    /* or 308% */
+    text-align: center;
+    letter-spacing: 0.04em;
+    color: #fff;
+}
+#desc{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 9px;
+    line-height: 10px;
+    /* or 111% */
+    text-align: center;
+    letter-spacing: 0.04em;
+    width: 70%;
+    color: #fff;
+}

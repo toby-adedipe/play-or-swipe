@@ -1,0 +1,16 @@
+.categoryName{
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    opacity: 0.8;
+    margin: 1.5rem 1rem;
+}
+
+.movies{
+    display: flex;
+    overflow-x: scroll;
+}
