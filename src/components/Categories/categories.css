@@ -7,9 +7,17 @@
     text-transform: uppercase;
     color: #FFFFFF;
     opacity: 0.8;
+}
+.categoryHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin: 1.5rem 1rem;
 }
-
+#arrow{
+    color: #EC1F41;
+    font-size: 20px;
+}
 .movies{
     display: flex;
     overflow-x: scroll;

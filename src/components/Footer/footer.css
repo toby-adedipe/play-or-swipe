@@ -1,0 +1,15 @@
+#footer{
+    background-color: #000;
+    width: 100%;
+}
+#footer p{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 26px;
+    /* identical to box height, or 186% */
+    letter-spacing: 0.05em;
+    /* white */
+    color: #FFFFFF;
+    padding: 1rem;
+}

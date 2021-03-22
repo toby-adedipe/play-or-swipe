@@ -13,6 +13,7 @@
     font-size: 18px;
     line-height: 22px;
     color: #FFFFFF;
+    text-align: center;
 }
 .rating{
     font-style: normal;
@@ -20,4 +21,13 @@
     font-size: 14px;
     line-height: 19px;
     color: #FFFFFF;
+}
+.ratingContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.ratingContainer p{
+    margin-left: 1rem;
+    margin-top: .3rem;
 }

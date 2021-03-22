@@ -1,4 +1,5 @@
 import Categories from '../components/Categories';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Search from '../components/Search';
 
@@ -12,6 +13,7 @@ const HomePage = () => {
                 <Categories category="Top Rated Movies" />
                 <Categories category="Popular Movies" />
             </main>
+            <Footer />
         </div>
     );
 };
