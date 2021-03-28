@@ -4,37 +4,37 @@ import './movie.css'
 import StarRatingComponent from 'react-star-rating-component';
 import Modal from '../Modal';
 
-const Movie = ({ img, title, rating, genre, year, synopsis, }) => {
+const Movie = ({ id, img, title, rating, genre, year, synopsis, ratingFrequency}) => {
     const [ showModal, setShowModal ] = useState(false);
-    const [ newRating, setNewRating ] = useState(rating);
     
+    console.log(showModal);
     return (
-        <div>
+        <div className="movieContainer" onClick={()=>setShowModal(true)}>
             <Modal 
                 show={showModal} 
                 setShowModal={setShowModal} 
+                id={id}
                 img={img} 
                 title={title} 
                 genre={genre}
                 year={year}
                 synopsis={synopsis}
                 rating={rating}
-                newRating={newRating}
-                setNewRating={setNewRating}
+                ratingFrequency={ratingFrequency}
             />
-            <div className="movieContainer" onClick={()=>setShowModal(true)}>
-            <img src={img} alt={title} className="movieArt"/>
-            <p className="title">{title}</p>
-            <div className="ratingContainer">
+            <div>
+              <img src={img} alt={title} className="movieArt"/>
+              <p className="title">{title}</p>
+              <div className="ratingContainer">
                 <StarRatingComponent
-                    name="rate"
-                    editing={false}
-                    starCount = {5}
-                    value={newRating}
-                    starColor={"#EC1F41"}
+                  name="rate"
+                  editing={false}
+                  starCount = {5}
+                  value={rating}
+                  starColor={"#EC1F41"}
                 />
-                <p className="rating">{newRating}</p>
-            </div>
+                <p className="rating">{rating}</p>
+              </div>
             </div>
         </div>
     );

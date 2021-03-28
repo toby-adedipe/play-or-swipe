@@ -1,13 +1,13 @@
-.popular-page{
+.top-rated-page{
     margin: 1rem;
 }
 
-.popular-movies{
+.top-rated-movies{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
-.popular-h1{
+.top-rated-h1{
     font-weight: bold;
     font-size: 1.25rem;
     line-height: 29px;

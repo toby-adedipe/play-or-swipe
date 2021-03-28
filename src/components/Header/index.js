@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './header.css';
 
 const Header = () => {
@@ -8,7 +9,7 @@ const Header = () => {
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
         }} className="header">
-            <p id="logo">Play or swipe</p>
+            <Link to="/"><p id="logo">Play or swipe</p></Link>
             <p id="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
         </header>
     );
