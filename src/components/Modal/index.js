@@ -5,22 +5,20 @@ import { useState } from "react";
 
 const Modal = ({id, setShowModal, show, title, rating, year, genre, img, synopsis, ratingFrequency}) => {
     const showHideClassName = show ? " modal display-block" : "modal display-none";
-    const [persRating, setPersRating] = useState(rating);
+    const [persRating, setPersRating] = useState(0);
 
     const URL = `http://localhost:5000/api/v1/movies/${id}`
 
-    const onStarClick = (nextValue, prevValue, name)=>{
+    const handleClick = (nextValue, prevValue, name)=>{
         setPersRating(nextValue);
     }
     const sendRate = async()=>{
-        let newRating = (((ratingFrequency*rating)+persRating)/(ratingFrequency+1)).toFixed(2);
-        const res = await axios.put(URL, {
-            rating: newRating,
-            ratingFrequency: ratingFrequency+1,
-        })
-        console.log(res);
-        setShowModal(false);
-        console.log(show);
+      let newRating = (((ratingFrequency*rating)+persRating)/(ratingFrequency+1)).toFixed(2);
+      await axios.put(URL, {
+          rating: newRating,
+          ratingFrequency: ratingFrequency+1,
+      })
+      setShowModal(false);
     }
 
     return (
@@ -52,7 +50,7 @@ const Modal = ({id, setShowModal, show, title, rating, year, genre, img, synopsi
                         value={persRating}
                         renderStarIcon={()=><ion-icon name="star" id="star-icon"></ion-icon>}
                         starColor={"#EC1F41"}
-                        onStarClick={onStarClick}
+                        onStarClick={handleClick}
                     />
                     <button onClick={sendRate} className="rate-btn">Rate</button>
                 </div>

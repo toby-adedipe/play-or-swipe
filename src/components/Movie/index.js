@@ -7,9 +7,8 @@ import Modal from '../Modal';
 const Movie = ({ id, img, title, rating, genre, year, synopsis, ratingFrequency}) => {
     const [ showModal, setShowModal ] = useState(false);
     
-    console.log(showModal);
     return (
-        <div className="movieContainer" onClick={()=>setShowModal(true)}>
+        <div className="movieContainer" >
             <Modal 
                 show={showModal} 
                 setShowModal={setShowModal} 
@@ -22,7 +21,7 @@ const Movie = ({ id, img, title, rating, genre, year, synopsis, ratingFrequency}
                 rating={rating}
                 ratingFrequency={ratingFrequency}
             />
-            <div>
+            <div onClick={()=>setShowModal(true)}>
               <img src={img} alt={title} className="movieArt"/>
               <p className="title">{title}</p>
               <div className="ratingContainer">

@@ -20,5 +20,15 @@
 }
 .movies{
     display: flex;
-    overflow-x: scroll;
+    overflow-x:auto;
+    margin: 0rem 1rem;
 }
+@media only screen and (min-width: 600px) {
+    .categoryHeader{
+        margin: 0 5rem;
+    }
+    .movies{
+        margin: 0 5rem;
+    }
+  }
+  

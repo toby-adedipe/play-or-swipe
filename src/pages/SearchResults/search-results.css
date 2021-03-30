@@ -1,0 +1,43 @@
+.search-results{
+  margin: 1rem;
+  min-height: calc(100vh - 5rem);
+}
+.search-results hr{
+  width: 100%;
+  margin-bottom: 1rem;
+  background-color: #2b2b2b;
+}
+.search-results>p{
+  margin-bottom: 1rem;
+}
+.add-movie{
+  display: flex;
+  align-items: center;
+}
+.add-container{
+  flex: 20%;
+}
+.add-container>div{
+  background-color: #ec1f41;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.add-movie>p{
+  flex: 80%;
+}
+#add{
+  font-size: 7.5rem;
+}
+a{
+  text-decoration: none;
+  color: inherit;
+}
+@media only screen and (min-width: 600px) {
+  .search-results{
+    margin: 2rem 5rem;
+  }
+}

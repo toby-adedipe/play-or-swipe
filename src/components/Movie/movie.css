@@ -1,5 +1,5 @@
 .movieContainer{
-    margin: 0 1rem;
+    margin-right: 1rem;
     width: 12.25rem;
     display: flex;
     flex-direction: column;
@@ -38,3 +38,6 @@
     margin-left: 1rem;
     margin-top: .3rem;
 }
+
+@media only screen and (min-width: 600px) {  }
+  

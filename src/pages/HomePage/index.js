@@ -1,40 +1,26 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useContext } from 'react';
 import Categories from '../../components/Categories';
+import Search from '../../components/Search';
+import AppContext from '../../context/AppContext';
+import SearchResults from '../SearchResults';
 
 const HomePage = () => {
-    const [popular, setPopular] = useState(null);
-    const [top, setTop] = useState(null)
-    const URL = "http://localhost:5000/api/v1/movies"
-  
-    useEffect(()=>{
-      fetchData()
-    }, []);
-  
-    const fetchData = async()=>{
-      const res = await axios.get(URL)
-      const filtered = filterPopular(res.data.data);
-      setPopular(filtered)
-      setTop(filtered);
-    }
-  
-    const filterPopular= (data)=>{
-      //console.log(data);
-      const newData = data.filter((item)=>{
-        return item.rating > 4.0;
-      })
-      return newData;
-    }  
+
+  const {popular, top, searchVal } = useContext(AppContext)
 
     return (
-        <>{
+        <>
+          <Search />
+          {
             popular === null || top === null
             ? <p>Fetching Data...</p>
-            : <div>
-                <Categories category="Top Rated Movies" link="/top-rated" data={top} />
-                <Categories category="Popular Movies" link="/popular" data={popular} />
-            </div>
-        }
+            : searchVal.length>0
+              ? <SearchResults />
+              : <div className="home-page">
+                  <Categories category="Top Rated Movies" link="/top-rated" data={top} />
+                  <Categories category="Popular Movies" link="/popular" data={popular} />
+                </div>         
+          }
         </>
     );
 };

@@ -37,19 +37,10 @@ const AddMovie = () => {
     setLoading(true);
     if(title < 1){
       setError("Add a movie title")
+      setLoading(false)
     }else if(!image){
-      const postInfo = async()=>{
-        const res = await axios.post(URL, {
-          title,
-          year,
-          genre,
-          synopsis,
-        })
-        if(res.status === 200){
-          resetInput();
-        }
-      }
-      postInfo();
+      setError("Forgot to add an image?")
+      setLoading(false)
     }else{
       const uploadTask = storage.ref(`images/${image.name}`).put(image);
       uploadTask.on(
@@ -71,6 +62,8 @@ const AddMovie = () => {
                   genre,
                   synopsis,
                   img: url,
+                  rating: 5,
+                  ratingFrequency: 0,
                 })
                 if(res.status === 200){
                   resetInput();
@@ -91,7 +84,8 @@ const AddMovie = () => {
   }
 
   return (
-    <div>{
+    <div className="add-page">
+    {
       loading
       ? <p>Uploading Information...</p>
       :       <div className="add-form">
@@ -105,6 +99,7 @@ const AddMovie = () => {
           ? <p className="success">{success}</p>
           : null
         }
+        <h3>Add a movie</h3>
         <div className="title-group">
           <div className="form-group title-container">
             <label>Name of Movie</label>

@@ -1,20 +1,32 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useHistory } from 'react-router-dom';
+
+import AppContext from "../../context/AppContext";
 import './search.css'
 const Search = () => {
-    const [val, setVal] = useState("");
+  const history = useHistory();
 
-    return (
-        <div className="searchContainer">
-            <div id="search">
-                <input 
+  const { search, searchVal, setSearchVal } = useContext(AppContext);
+
+  const handleSearch =(val)=>{
+    setSearchVal(val)
+    search(val)
+    //history.push('/search')
+  }
+  return (
+      <div className="searchContainer">
+          <div>
+              <form id="search">
+                  <input 
                     placeholder="Search for a movie"
-                    value={val} 
-                    onChange={(e)=>setVal(e.target.value)}
-                />
-                <ion-icon name="search-outline" id="searchIcon" onClick={()=>console.log("hi")}></ion-icon>
-            </div>
-        </div>
-    );
+                    value={searchVal} 
+                    onChange={(e)=>handleSearch(e.target.value)}
+                  />
+                  <ion-icon name="search-outline" id="searchIcon" onClick={handleSearch}></ion-icon>
+              </form>
+          </div>
+      </div>
+  );
 };
 
 export default Search;
