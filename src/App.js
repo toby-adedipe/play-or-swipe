@@ -31,7 +31,7 @@ function App() {
   const [results, setResults] = useState([]);
   const [searchVal, setSearchVal] = useState("");
 
-  const URL = "http://localhost:5000/api/v1"
+  const URL = "https://play-or-swipe.herokuapp.com/api/v1"
 
   const fetchData = async()=>{
     const res = await axios.get(`${URL}/movies`)
