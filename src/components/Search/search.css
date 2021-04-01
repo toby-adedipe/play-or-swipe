@@ -1,5 +1,5 @@
 .searchContainer{
-    margin: 0 1rem;
+    margin: 1rem;
 }
 #search{
     width: calc(100% - 1rem);
@@ -8,6 +8,8 @@
     background-color: #2B2B2B;
     margin: 1rem 0;
     padding: .5rem;
+    display: flex;
+    align-items: center;
 }
 #search input{
     background-color: #2B2B2B;
@@ -16,4 +18,12 @@
 }
 #search input:focus{
     outline: none;
+}
+#searchIcon{
+    color: #fff;
+}
+@media only screen and (min-width: 600px)  {
+    .searchContainer{
+        margin: 1rem 5rem;
+    }
 }

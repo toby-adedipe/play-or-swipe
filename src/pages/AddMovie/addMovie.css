@@ -1,0 +1,68 @@
+.add-page{
+    margin: 1rem;
+    min-height: calc(100vh - 5rem);
+}
+.form-group input{
+    height: 24px;
+    border-radius: 10px;
+    border: 1px solid #FFFFFF;
+    background: #191919;
+    color: #ffffff;
+    padding: 10px;
+}
+input:focus, textarea:focus{
+    outline: none;
+}
+
+
+.form-group{
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0;
+}
+.add-form{
+    margin: 1rem;
+    width: 90%;
+    max-width: 30rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #fff;
+    height: 75vh;
+}
+
+.title-group{
+    display: flex;
+}
+.title-container{
+    flex: 70%;
+}
+.year-container{
+    flex: 30%;
+    padding-left: 10px;
+}
+.submit-btn{
+    background: #EC1F41;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;  
+    margin-top: 1rem;
+}
+.genre-container{
+    width: 70%;
+}
+.image-file{
+    display: flex;
+    flex-direction: column;
+}
+.error{
+    color: #EC1F41;
+}
+.success{
+    color: #52a911
+}
+
+@media only screen and (min-width: 600px) {
+    .add-page{
+        margin: 1rem 5rem;
+    }  
+}

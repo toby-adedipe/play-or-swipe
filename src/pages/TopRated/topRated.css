@@ -1,0 +1,25 @@
+.top-rated-page{
+    min-height: calc(100vh - 5rem);
+}
+.top-rated-movies{
+    display: grid;
+    grid-gap: 0.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(12.25rem, 0.75fr));
+}
+.top-rated-h1{
+    font-weight: bold;
+    font-size: 1.25rem;
+    margin: 1rem;
+    line-height: 29px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+@media only screen and (min-width: 600px) {
+    .top-rated-h1{
+        margin: 0 5rem;
+    }
+    .top-rated-movies{
+        margin: 0 5rem;
+    }
+  }
+  

@@ -7,10 +7,28 @@
     text-transform: uppercase;
     color: #FFFFFF;
     opacity: 0.8;
+}
+.categoryHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin: 1.5rem 1rem;
 }
-
+#arrow{
+    color: #EC1F41;
+    font-size: 20px;
+}
 .movies{
     display: flex;
-    overflow-x: scroll;
+    overflow-x:auto;
+    margin: 0rem 1rem;
 }
+@media only screen and (min-width: 600px) {
+    .categoryHeader{
+        margin: 0 5rem;
+    }
+    .movies{
+        margin: 0 5rem;
+    }
+  }
+  

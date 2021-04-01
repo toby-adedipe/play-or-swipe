@@ -4,6 +4,7 @@
     align-items: center;
     flex-direction: column;
     padding: 1rem 0;
+    height: 5rem;
 }
 #logo{
     font-style: normal;
@@ -14,6 +15,9 @@
     text-align: center;
     letter-spacing: 0.04em;
     color: #fff;
+}
+a{
+    text-decoration: none;
 }
 #desc{
     font-style: normal;
@@ -26,3 +30,9 @@
     width: 70%;
     color: #fff;
 }
+@media only screen and (min-width: 600px) {
+    .header{
+      height: 7rem;
+    }
+  }
+  
