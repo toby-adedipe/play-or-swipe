@@ -20,8 +20,8 @@ const TopRated = () => {
                 {
                   top
                   ? <div className="top-rated-movies"> 
-                      {top.map(({_id, genre, rating, synopsis, title, year, img, ratingFrequency})=> 
-                        <Movie key={_id} id={_id} genre={genre} title={title} rating={rating} synopsis={synopsis} year={year} img={img} ratingFrequency={ratingFrequency}/>)}
+                      {top.map((item)=> 
+                        <Movie key={item._id} data={item}/>)}
                     </div>
                   :<p>Fetching movies...</p>
                 }

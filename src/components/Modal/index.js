@@ -2,43 +2,59 @@ import "./modal.css";
 import StarRatingComponent from 'react-star-rating-component';
 import axios from "axios";
 import { useState } from "react";
+import Loader from 'react-loader-spinner'
 
-const Modal = ({id, setShowModal, show, title, rating, year, genre, img, synopsis, ratingFrequency}) => {
-    const showHideClassName = show ? " modal display-block" : "modal display-none";
-    const [persRating, setPersRating] = useState(0);
+const Modal = ({data, show, setShowModal}) => {
+	const showHideClassName = show ? " modal display-block" : "modal display-none";
+	const [persRating, setPersRating] = useState(0);
+	const [visible, setVisible] = useState(false);
+	const URL = `https://play-or-swipe.herokuapp.com/api/v1/movies/${data._id}`
 
-    const URL = `https://play-or-swipe.herokuapp.com/api/v1/movies/${id}`
-
-    const handleClick = (nextValue, prevValue, name)=>{
-        setPersRating(nextValue);
-    }
-    const sendRate = async()=>{
-      let newRating = (((ratingFrequency*rating)+persRating)/(ratingFrequency+1)).toFixed(2);
-      await axios.put(URL, {
-          rating: newRating,
-          ratingFrequency: ratingFrequency+1,
-      })
-      setShowModal(false);
-    }
+	const handleClick = (nextValue, prevValue, name)=>{
+		setPersRating(nextValue);
+	}
+	const sendRate = async()=>{
+		setVisible(true)
+		let newRating = (((data.ratingFrequency*data.rating)+persRating)/(data.ratingFrequency+1)).toFixed(2);
+		await axios.put(URL, {
+			rating: newRating,
+			ratingFrequency: data.ratingFrequency+1,
+		})
+		setVisible(false)
+		setShowModal(false);
+	}
 
     return (
         <div className={showHideClassName}>
-            <div className="modal-main">
+				{
+					visible
+					? <div className="spinner-container">
+							<Loader 
+								type="TailSpin"
+								color="#EC1F41"
+								height={40}
+								width={40}
+								visible={visible}
+							/>
+						</div>
+					:null
+				}
+					<div className="modal-main">
                 <div className="header-container">
                     <ion-icon name="close-outline" id="close-btn" onClick={()=>setShowModal(false)}></ion-icon>
                     <p className="h3">Rate this film</p>
                 </div>
                 <div className="movie-info">
-                    <img src={img} alt={title} className="movieArt"/>
+                    <img src={data.img} alt={data.title} className="movieArt"/>
                     <div className="info-container">
                         <div className="title-container">
-                            <p className="movie-title">{title}</p>
-                            <p className="movie-genre">{genre} | <span>{year}</span></p>
+                            <p className="movie-title">{data.title}</p>
+                            <p className="movie-genre">{data.genre} | <span>{data.year}</span></p>
                             <hr/>
                         </div>
                         <div className="synopsis-container">
                             <p className="synopsis-header">Synopsis</p>
-                            <p className="synopsis-content">{synopsis}</p>
+                            <p className="synopsis-content">{data.synopsis}</p>
                         </div>
                     </div>
                 </div>

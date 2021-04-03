@@ -20,7 +20,9 @@ const SearchResults = () => {
           <ion-icon name="add" id="add"></ion-icon>
           </div>
         </div>
-        <p>Can't find your movie? Be the first to rate it</p>
+        <div className="add-btn-desc">
+          <p>Can't find your movie? Be the first to rate it</p>
+        </div>
       </div>
       </Link>
     </div>

@@ -11,17 +11,10 @@ const Categories = ({category, link, data}) => {
                 <Link to={link}><ion-icon name="chevron-forward-outline" id="arrow" ></ion-icon></Link> 
             </div>
             <div className="movies">
-                {data.slice(0, 5).map(({_id, title, rating, img, year, genre, synopsis, ratingFrequency})=> (
+                {data.slice(0, 5).map((item)=> (
                     <Movie 
-                        key={_id} 
-                        id={_id}
-                        title={title} 
-                        rating={rating} 
-                        img={img} 
-                        year={year}
-                        genre={genre}
-                        synopsis={synopsis}
-                        ratingFrequency={ratingFrequency}
+                        key={item._id} 
+                        data={item}
                     />
                 ))}
             </div>

@@ -9,7 +9,6 @@ const Search = () => {
   const handleSearch =(val)=>{
     setSearchVal(val)
     search(val)
-    //history.push('/search')
   }
   return (
       <div className="searchContainer">

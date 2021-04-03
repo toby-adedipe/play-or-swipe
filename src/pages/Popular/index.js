@@ -22,6 +22,7 @@ const TopRated = () => {
                     {popular.map(({_id, genre, rating, synopsis, title, year, img, ratingFrequency})=> 
                       <Movie key={_id} id={_id} genre={genre} title={title} rating={rating} synopsis={synopsis} year={year} img={img} ratingFrequency={ratingFrequency}/>)}
                   </div>
+                  //consider putting a loader spinner here.
                 :<p>Fetching movies...</p>
               }
           </div>

@@ -30,6 +30,7 @@ function App() {
   const [results, setResults] = useState([]);
   const [searchVal, setSearchVal] = useState("");
   const [visible, setVisible] = useState(false);
+  const [error, setError] = useState(null);
 
   const URL = "https://play-or-swipe.herokuapp.com/api/v1"
 
@@ -54,11 +55,17 @@ function App() {
 
   useEffect(()=>{
     const fetchData = async()=>{
-      const res = await axios.get(`${URL}/movies`)
-      const filtered = filterPopular(res.data.data);
-      setMovies(res.data.data);
-      setPopular(filtered);
-      setTop(filtered);
+      setVisible(true)
+      try{
+        const res = await axios.get(`${URL}/movies`)
+        const filtered = filterPopular(res.data.data);
+        setMovies(res.data.data);
+        setPopular(filtered);
+        setTop(filtered);  
+      }catch(err){
+        setError(err)
+      }
+      setVisible(false);
     };
     fetchData()
   }, []);
@@ -73,6 +80,10 @@ function App() {
     setSearchVal,
     search,
     results,
+    visible,
+    setVisible,
+    error,
+    setError,
   }
 
   return (

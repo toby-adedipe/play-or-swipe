@@ -1,4 +1,7 @@
-.search-results-page>hr{
+.search-results-movie{
+  cursor: pointer;
+}
+.search-results-movie>hr{
   background-color: #2b2b2b;
   margin-bottom: 1rem;
   width: 100%;
@@ -8,6 +11,9 @@
 }
 .art-container{
   flex: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .search-results-image{
   width: 8rem;
