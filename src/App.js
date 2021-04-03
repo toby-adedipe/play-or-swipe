@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,7 +16,6 @@ import AddMovie from "./pages/AddMovie";
 
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Search from './components/Search';
 
 import AppContext from './context/AppContext';
 import SearchResults from "./pages/SearchResults";
@@ -33,13 +32,7 @@ function App() {
 
   const URL = "https://play-or-swipe.herokuapp.com/api/v1"
 
-  const fetchData = async()=>{
-    const res = await axios.get(`${URL}/movies`)
-    const filtered = filterPopular(res.data.data);
-    setMovies(res.data.data);
-    setPopular(filtered);
-    setTop(filtered);
-  }
+  
 
   const filterPopular= (data)=>{
     const newData = data.filter((item)=>{
@@ -59,11 +52,18 @@ function App() {
   }
 
   useEffect(()=>{
+    const fetchData = async()=>{
+      const res = await axios.get(`${URL}/movies`)
+      const filtered = filterPopular(res.data.data);
+      setMovies(res.data.data);
+      setPopular(filtered);
+      setTop(filtered);
+    };
     fetchData()
   }, []);
 
 
-  const context = useMemo(()=> ({
+  const context = {
     showModal: showModal,
     setShowModal: setShowModal,
     popular,
@@ -72,7 +72,7 @@ function App() {
     setSearchVal,
     search: search,
     results,
-  }))
+  }
 
   return (
     <AppContext.Provider value={context}>

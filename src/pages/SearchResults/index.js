@@ -8,7 +8,6 @@ import './search-results.css'
 const SearchResults = () => {
   const {searchVal, results} = useContext(AppContext);
 
-  console.log(results);
   return (
     <div className="search-results">
       <p>Showing search results for "{searchVal}" </p>

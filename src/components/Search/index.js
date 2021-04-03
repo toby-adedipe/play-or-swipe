@@ -1,10 +1,8 @@
-import { useContext, useState } from "react";
-import { useHistory } from 'react-router-dom';
+import { useContext } from "react";
 
 import AppContext from "../../context/AppContext";
 import './search.css'
 const Search = () => {
-  const history = useHistory();
 
   const { search, searchVal, setSearchVal } = useContext(AppContext);
 

@@ -7,7 +7,7 @@ const Modal = ({id, setShowModal, show, title, rating, year, genre, img, synopsi
     const showHideClassName = show ? " modal display-block" : "modal display-none";
     const [persRating, setPersRating] = useState(0);
 
-    const URL = `http://localhost:5000/api/v1/movies/${id}`
+    const URL = `https://play-or-swipe.herokuapp.com/api/v1/movies/${id}`
 
     const handleClick = (nextValue, prevValue, name)=>{
         setPersRating(nextValue);
