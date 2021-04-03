@@ -29,6 +29,7 @@ function App() {
   const [top, setTop] = useState(null);
   const [results, setResults] = useState([]);
   const [searchVal, setSearchVal] = useState("");
+  const [visible, setVisible] = useState(false);
 
   const URL = "https://play-or-swipe.herokuapp.com/api/v1"
 
@@ -70,7 +71,7 @@ function App() {
     top,
     searchVal,
     setSearchVal,
-    search: search,
+    search,
     results,
   }
 
