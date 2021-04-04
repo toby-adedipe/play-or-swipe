@@ -10,9 +10,9 @@ const Movie = ({ data }) => {
     return (
         <div className="movieContainer" >
             <Modal 
-                show={showModal} 
-                setShowModal={setShowModal} 
-                data={data}
+              show={showModal} 
+              setShowModal={setShowModal} 
+              data={data}
             />
             <div onClick={()=>setShowModal(true)}>
               <img src={data.img} alt={data.title} className="movieArt"/>
