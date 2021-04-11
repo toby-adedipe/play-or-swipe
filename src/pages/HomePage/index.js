@@ -13,7 +13,7 @@ const HomePage = () => {
   return (
     <div className="home-page">
       <Search />
-      {console.log(error)}
+      
       {
         error
         
