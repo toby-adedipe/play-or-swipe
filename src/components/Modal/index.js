@@ -1,25 +1,38 @@
 import "./modal.css";
 import StarRatingComponent from 'react-star-rating-component';
 import axios from "axios";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Loader from 'react-loader-spinner'
+import AppContext from "../../context/AppContext";
 
 const Modal = ({data, show, setShowModal}) => {
 	const showHideClassName = show ? " modal display-block" : "modal display-none";
 	const [persRating, setPersRating] = useState(0);
 	const [visible, setVisible] = useState(false);
+
+  //const SERVER = `http://localhost:5000/api/v1/movies/${data._id}`
 	const URL = `https://play-or-swipe.herokuapp.com/api/v1/movies/${data._id}`
+
+	const { currentCookie } = useContext(AppContext);
 
 	const handleClick = (nextValue, prevValue, name)=>{
 		setPersRating(nextValue);
 	}
+
 	const sendRate = async()=>{
 		setVisible(true)
 		let newRating = (((data.ratingFrequency*data.rating)+persRating)/(data.ratingFrequency+1)).toFixed(2);
-		await axios.put(URL, {
-			rating: newRating,
-			ratingFrequency: data.ratingFrequency+1,
-		})
+		try{
+			const res = await axios.put(URL, {
+				rating: newRating,
+				ratingFrequency: data.ratingFrequency+1,
+				cookieToken: currentCookie,
+			})
+			console.log(res);
+		}catch(error){
+			//HANDLE THIS ERROR
+			console.log(error);
+		}
 		setVisible(false)
 		setShowModal(false);
 	}
