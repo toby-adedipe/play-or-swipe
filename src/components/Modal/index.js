@@ -10,8 +10,8 @@ const Modal = ({data, show, setShowModal}) => {
 	const [persRating, setPersRating] = useState(0);
 	const [visible, setVisible] = useState(false);
 
-  //const SERVER = `http://localhost:5000/api/v1/movies/${data._id}`
-	const URL = `https://play-or-swipe.herokuapp.com/api/v1/movies/${data._id}`
+  const SERVER = `http://localhost:5000/api/v1/movies/${data._id}`
+	//const URL = `https://play-or-swipe.herokuapp.com/api/v1/movies/${data._id}`
 
 	const { currentCookie } = useContext(AppContext);
 
@@ -23,12 +23,11 @@ const Modal = ({data, show, setShowModal}) => {
 		setVisible(true)
 		let newRating = (((data.ratingFrequency*data.rating)+persRating)/(data.ratingFrequency+1)).toFixed(2);
 		try{
-			const res = await axios.put(URL, {
+			await axios.put(SERVER, {
 				rating: newRating,
 				ratingFrequency: data.ratingFrequency+1,
 				cookieToken: currentCookie,
 			})
-			console.log(res);
 		}catch(error){
 			//HANDLE THIS ERROR
 			console.log(error);

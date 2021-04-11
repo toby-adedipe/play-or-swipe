@@ -39,8 +39,8 @@ function App() {
   const [cookies, setCookie] = useCookies(["rateToken"]);
 	const [currentCookie, setCurrentCookie] = useState(null);
 
-  //const SERVER = "http://localhost:5000/api/v1"
-  const URL = "https://play-or-swipe.herokuapp.com/api/v1"
+  const SERVER = "http://localhost:5000/api/v1"
+  //const URL = "https://play-or-swipe.herokuapp.com/api/v1"
 
   
 
@@ -87,7 +87,7 @@ function App() {
     const fetchData = async()=>{
       setVisible(true)
       try{
-        const res = await axios.get(`${URL}/movies`)
+        const res = await axios.get(`${SERVER}/movies`)
         const filtered = filterPopular(res.data.data);
         const filteredNigerian = filterNigerian(res.data.data);
         setMovies(res.data.data);
@@ -101,7 +101,7 @@ function App() {
       handleCookie()
     };
     fetchData()
-  });
+  }, []);
 
 
   const context = {
