@@ -1,12 +1,12 @@
 import AppContext from '../../context/AppContext';
 import { useContext } from "react";
 import Movie from "../../components/Movie";
-import './topRated.css';
+import './TopNigerian.css';
 
 import SearchResults from '../SearchResults';
 import Search from '../../components/Search';
-const TopRated = () => {
-  const { top, searchVal } = useContext(AppContext);
+const TopNigerian = () => {
+  const { nigerian, searchVal } = useContext(AppContext);
 
   return (
 
@@ -16,11 +16,11 @@ const TopRated = () => {
         searchVal.length>0
         ? <SearchResults />
         : <div className="top-rated-page">
-          <p className="top-rated-h1">Top Rated Movies</p>
+          <p className="top-rated-h1">Top Rated Nigerian Movies</p>
                 {
-                  top
+                  nigerian
                   ? <div className="top-rated-movies"> 
-                      {top.map((item)=> 
+                      {nigerian.map((item)=> 
                         <Movie key={item._id} data={item}/>)}
                     </div>
                   :<p>Fetching movies...</p>
@@ -31,4 +31,4 @@ const TopRated = () => {
   );
 };
 
-export default TopRated;
+export default TopNigerian;

@@ -26,8 +26,9 @@
   align-items: center;
   justify-content: center;
 }
-.add-movie>p{
+.add-btn-desc{
   flex: 80%;
+  margin-left: .5rem;
 }
 #add{
   font-size: 7.5rem;

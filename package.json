@@ -10,10 +10,13 @@
     "firebase": "^8.3.1",
     "prop-types": "^15.7.2",
     "react": "^16.2.0",
+    "react-cookie": "^4.0.3",
     "react-dom": "^16.2.0",
+    "react-loader-spinner": "^4.0.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-star-rating-component": "^1.4.1",
+    "uuidv4": "^6.2.7",
     "web-vitals": "^1.0.1"
   },
   "scripts": {

@@ -4,35 +4,28 @@ import './movie.css'
 import StarRatingComponent from 'react-star-rating-component';
 import Modal from '../Modal';
 
-const Movie = ({ id, img, title, rating, genre, year, synopsis, ratingFrequency}) => {
+const Movie = ({ data }) => {
     const [ showModal, setShowModal ] = useState(false);
     
     return (
         <div className="movieContainer" >
             <Modal 
-                show={showModal} 
-                setShowModal={setShowModal} 
-                id={id}
-                img={img} 
-                title={title} 
-                genre={genre}
-                year={year}
-                synopsis={synopsis}
-                rating={rating}
-                ratingFrequency={ratingFrequency}
+              show={showModal} 
+              setShowModal={setShowModal} 
+              data={data}
             />
             <div onClick={()=>setShowModal(true)}>
-              <img src={img} alt={title} className="movieArt"/>
-              <p className="title">{title}</p>
+              <img src={data.img} alt={data.title} className="movieArt"/>
+              <p className="title">{data.title}</p>
               <div className="ratingContainer">
                 <StarRatingComponent
                   name="rate"
                   editing={false}
                   starCount = {5}
-                  value={rating}
+                  value={data.rating}
                   starColor={"#EC1F41"}
                 />
-                <p className="rating">{rating}</p>
+                <p className="rating">{data.rating}</p>
               </div>
             </div>
         </div>
