@@ -10,10 +10,17 @@
     color: #ffffff;
     padding: 10px;
 }
-input:focus, textarea:focus{
+.form-group select{
+    height: 44px;
+    border-radius: 10px;
+    border: 1px solid #FFFFFF;
+    background: #191919;
+    color: #ffffff;
+    padding: 10px;
+}
+input:focus, textarea:focus, select:focus{
     outline: none;
 }
-
 
 .form-group{
     display: flex;
@@ -34,22 +41,37 @@ input:focus, textarea:focus{
 .title-group{
     display: flex;
 }
+.genre-location-group{
+    display: flex;
+}
 .title-container{
-    flex: 70%;
+    flex: 65%;
+}
+.genre-container{
+    flex: 65%;
 }
 .year-container{
-    flex: 30%;
+    flex: 35%;
+    padding-left: 10px;
+}
+.location-container{
+    flex: 35%;
     padding-left: 10px;
 }
 .submit-btn{
     background: #EC1F41;
-    padding: 1rem 1.5rem;
+    padding: .75rem 1rem;
     border-radius: 10px;  
     margin-top: 1rem;
+    color: #fff;
+    font-size: 1rem;
+    max-height: 2.75rem;
+    cursor: pointer;
 }
-.genre-container{
-    width: 70%;
+button:focus{
+    outline: none;
 }
+
 .image-file{
     display: flex;
     flex-direction: column;

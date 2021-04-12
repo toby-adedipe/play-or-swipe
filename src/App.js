@@ -61,6 +61,9 @@ function App() {
     })
     return newData;
   }
+
+  
+
   const search = (val)=>{
     let results;
     if (val.length > 0){
@@ -109,6 +112,7 @@ function App() {
     setShowModal: setShowModal,
     popular,
     top,
+    setTop,
     searchVal,
     setSearchVal,
     search,
@@ -118,7 +122,7 @@ function App() {
     error,
     setError,
     currentCookie,
-    nigerian
+    nigerian,
   }
 
   return (

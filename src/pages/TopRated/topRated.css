@@ -9,17 +9,52 @@
 .top-rated-h1{
     font-weight: bold;
     font-size: 1.25rem;
-    margin: 1rem;
-    line-height: 29px;
-    letter-spacing: 0.04em;
     text-transform: uppercase;
 }
+.top-header-container{
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem;
+    align-items: center;
+}
+#filter-icon{
+    color: #ec1f41;
+    font-size: 1.25rem;
+    cursor: pointer;
+}
+.filter-container{
+    margin: 1rem;
+}
+.filter-options{
+    display: flex;
+    align-items: baseline;
+    margin-right: 1rem;
+}
+.filter-options select{
+    border: 1px solid #ec1f41;
+    border-radius: 10px;
+    background-color: inherit;
+    color: #fff;
+    margin-left: .5rem;
+    margin-bottom: 1rem;
+    padding: .75rem 1rem;
+}
+.filter-options select:focus{
+    outline: none;
+}
+.filter-options-container{
+    display: flex;
+}
+
 @media only screen and (min-width: 600px) {
-    .top-rated-h1{
-        margin: 0 5rem;
+    .top-header-container{
+        margin: 1rem 5rem;
     }
     .top-rated-movies{
         margin: 0 5rem;
+    }
+    .filter-container{
+        margin: 1rem 5rem;
     }
   }
   

@@ -1,31 +1,94 @@
 import AppContext from '../../context/AppContext';
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import Movie from "../../components/Movie";
 import './TopNigerian.css';
 
 import SearchResults from '../SearchResults';
 import Search from '../../components/Search';
+
 const TopNigerian = () => {
   const { nigerian, searchVal } = useContext(AppContext);
+  const [yearVal, setYearVal] = useState("");
+  const [locationVal, setLocationVal] = useState("nigeria");
+  const [filterOptions, setFilterOptions] = useState(false);
+  const [filteredData, setFilteredData] = useState(nigerian);
+
+  useEffect(()=>{
+    setFilteredData(nigerian);
+  }, [nigerian]);
+
+  const submitFilter = ()=>{
+    const dataCopy = nigerian;
+    let newData;
+    if (yearVal.length === 0 && locationVal.length > 0) {
+      newData = dataCopy.filter((item)=>{
+        return item.location === locationVal;
+      })
+    }else if (locationVal.length === 0 && yearVal.length > 0){
+      newData = dataCopy.filter((item)=>{
+        return item.year === yearVal;
+      })
+    } else if (locationVal.length > 0 && yearVal.length > 0){
+      newData = dataCopy.filter((item)=>{
+        return item.year === yearVal && item.location === locationVal;
+      })
+    }else{
+      newData = nigerian;
+    }
+    setFilteredData(newData);
+  }
 
   return (
-
     <>
       <Search />
       {
         searchVal.length>0
         ? <SearchResults />
         : <div className="top-rated-page">
-          <p className="top-rated-h1">Top Rated Nigerian Movies</p>
-                {
-                  nigerian
-                  ? <div className="top-rated-movies"> 
-                      {nigerian.map((item)=> 
-                        <Movie key={item._id} data={item}/>)}
-                    </div>
-                  :<p>Fetching movies...</p>
-                }
+            <div className="top-header-container">
+              <p className="top-rated-h1">Top Rated Nigerian Movies</p>
+              <div onClick={()=>setFilterOptions(!filterOptions)}><ion-icon name="filter" id="filter-icon"></ion-icon></div>
             </div>
+            {
+              filterOptions
+              ? <div className="filter-container">
+                  <div className="filter-options-container">
+                    <div className="filter-options">
+                      <p>Year: </p>
+                      <select onChange={(element)=>setYearVal(element.target.value)} value={yearVal}>
+                        <option value="" defaultValue></option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                        <option value="2019">2019</option>
+                        <option value="2018">2018</option>
+                        <option value="2017">2017</option>
+                        <option value="2016">2016</option>
+                      </select>
+                    </div>
+                    <div className="filter-options">
+                      <p>Industry: </p>
+                      <select onChange={(element)=>setLocationVal(element.target.value)} value={locationVal}>
+                        <option value=""></option>
+                        <option value="nigeria" defaultValue>Nigeria</option>
+                        <option value="america">America</option>
+                      </select>
+                    </div>                
+                  </div>
+                  <button className="submit-btn" onClick={submitFilter}>Filter</button>
+                </div>
+              : null
+            }
+            <div>
+              {
+                filteredData
+                ? <div className="top-rated-movies"> 
+                    {filteredData.map((item)=> 
+                      <Movie key={item._id} data={item}/>)}
+                  </div>
+                :<p>Fetching movies...</p>
+              }
+            </div>
+          </div>
         }
     </>
   );

@@ -13,6 +13,7 @@ const AddMovie = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [location, setLocation] = useState("");
 
   const handleChange = e =>{
     if(e.target.files[0]){
@@ -28,18 +29,22 @@ const AddMovie = () => {
     setYear("");
     setGenre("");
     setSynopsis("");
-    setError(null)
+    setError(null);
+    setLocation("");
     setSuccess("Movie was successfully uploaded!!!")
     setLoading(false)
   }
 
   const handleUpload = ()=>{
     setLoading(true);
-    if(title < 1){
+    if(title.length < 1){
       setError("Add a movie title")
       setLoading(false)
     }else if(!image){
       setError("Forgot to add an image?")
+      setLoading(false)
+    }else if(location.length< 1){
+      setError("Please include a location")
       setLoading(false)
     }else{
       const uploadTask = storage.ref(`images/${image.name}`).put(image);
@@ -61,6 +66,7 @@ const AddMovie = () => {
                   year,
                   genre,
                   synopsis,
+                  location,
                   img: url,
                   rating: 5,
                   ratingFrequency: 0,
@@ -88,7 +94,7 @@ const AddMovie = () => {
     {
       loading
       ? <p>Uploading Information...</p>
-      :       <div className="add-form">
+      : <div className="add-form">
         {
           error
           ? <p className="error">{error}</p>
@@ -110,9 +116,19 @@ const AddMovie = () => {
             <input type="text" onChange={(e)=>setYear(e.target.value)} value={year} className="year-input" />
           </div>
         </div>
-        <div className="form-group genre-container">
-          <label>Genre</label>
-          <input type="text" onChange={(e)=>setGenre(e.target.value)} value={genre} className="genre-input" />
+        <div className="genre-location-group">
+          <div className="form-group genre-container">
+            <label>Genre</label>
+            <input type="text" onChange={(e)=>setGenre(e.target.value)} value={genre} className="genre-input" />
+          </div>
+          <div className="form-group location-container">
+            <label>Location</label>
+            <select onChange={(element)=>setLocation(element.target.value)} value={location}>
+              <option value="" defaultValue></option>
+              <option value="nigeria" >Nigeria</option>
+              <option value="america">America</option>
+            </select>
+          </div>
         </div>
         <div className="form-group">
           <label>Synopsis</label>
