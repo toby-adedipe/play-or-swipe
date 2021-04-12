@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import Categories from '../../components/Categories';
 import Search from '../../components/Search';
 import AppContext from '../../context/AppContext';
@@ -8,8 +8,11 @@ import './homepage.css';
 
 const HomePage = () => {
 
-  const {popular, top, searchVal, visible, error, nigerian } = useContext(AppContext)
+  const {popular, top, searchVal, visible, error, nigerian, handleCookie } = useContext(AppContext)
 
+  useEffect(()=>{
+    handleCookie();
+  }, [handleCookie])
   return (
     <div className="home-page">
       <Search />

@@ -101,7 +101,6 @@ function App() {
         setError(err)
       }
       setVisible(false);
-      handleCookie()
     };
     fetchData()
   }, []);
@@ -123,6 +122,7 @@ function App() {
     setError,
     currentCookie,
     nigerian,
+    handleCookie
   }
 
   return (
