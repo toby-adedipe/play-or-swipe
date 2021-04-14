@@ -73,12 +73,12 @@ const Modal = ({data, show, setShowModal}) => {
                 <hr className="big-hr"/>
                 <div className="rating-container">
                     <StarRatingComponent
-                        name="rate"
-                        starCount = {5}
-                        value={persRating}
-                        renderStarIcon={()=><ion-icon name="star" id="star-icon"></ion-icon>}
-                        starColor={"#EC1F41"}
-                        onStarClick={handleClick}
+											name="rate"
+											starCount = {5}
+											value={persRating}
+											renderStarIcon={()=><ion-icon name="star" id="star-icon"></ion-icon>}
+											starColor={"#EC1F41"}
+											onStarClick={handleClick}
                     />
                     <button onClick={sendRate} className="rate-btn">Rate</button>
                 </div>

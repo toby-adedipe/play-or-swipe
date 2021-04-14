@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
 } from "react-router-dom";
 import axios from 'axios';
 import { CookiesProvider } from "react-cookie";
@@ -11,18 +10,13 @@ import { v4 as uuidv4 } from 'uuid';
 
 import './App.css';
 
-import HomePage from './pages/HomePage';
-import TopRated from './pages/TopRated';
-import Popular from './pages/Popular';
-import Error404 from './pages/Error404';
-import AddMovie from "./pages/AddMovie";
-
 import Header from './components/Header';
 import Footer from './components/Footer';
 
 import AppContext from './context/AppContext';
-import SearchResults from "./pages/SearchResults";
-import TopNigerian from "./pages/TopNigerianMovies";
+import routes from "./config/routes";
+import { AuthProvider } from "./context";
+import AppRoute from "./config/AppRoute";
 
 
 
@@ -39,8 +33,8 @@ function App() {
   const [cookies, setCookie] = useCookies(["rateToken"]);
 	const [currentCookie, setCurrentCookie] = useState(null);
 
-  //const SERVER = "http://localhost:5000/api/v1"
-  const URL = "https://play-or-swipe.herokuapp.com/api/v1"
+  const SERVER = "http://localhost:5000/api/v1"
+  //const URL = "https://play-or-swipe.herokuapp.com/api/v1"
 
   
 
@@ -90,7 +84,7 @@ function App() {
     const fetchData = async()=>{
       setVisible(true)
       try{
-        const res = await axios.get(`${URL}/movies`)
+        const res = await axios.get(`${SERVER}/movies`)
         const filtered = filterPopular(res.data.data);
         const filteredNigerian = filterNigerian(res.data.data);
         setMovies(res.data.data);
@@ -127,21 +121,25 @@ function App() {
 
   return (
     <CookiesProvider>
-      <AppContext.Provider value={context}>
-        <Router>
-          <Header />
-          <Switch>
-            <Route exact path = "/" component={HomePage} />
-            <Route exact path = "/top-rated" component={TopRated} />
-            <Route exact path = "/top-nigerian" component={TopNigerian} />
-            <Route exact path = "/popular" component={Popular} />
-            <Route exact path = "/add" component={AddMovie} />
-            <Route exact path = "/search" component={SearchResults} />
-            <Route component={Error404} />
-          </Switch>
-          <Footer />
-        </Router>
-      </AppContext.Provider>
+      <AuthProvider>
+        <AppContext.Provider value={context}>
+          <Router>
+            <Header />
+            <Switch>
+              {routes.map((route)=>(
+                <AppRoute
+                  key={route.path}
+                  exact
+                  path={route.path}
+                  component={route.component}
+                  isPrivate={route.isPrivate}
+                />
+              ))}
+            </Switch>
+            <Footer />
+          </Router>
+        </AppContext.Provider>
+      </AuthProvider>
     </CookiesProvider>
   );
 }

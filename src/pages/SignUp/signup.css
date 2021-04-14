@@ -1,0 +1,30 @@
+.signup-page{
+  margin: 1rem;
+  min-height: calc(100vh - 10rem);
+  display: flex;
+  justify-content: center;
+}
+.signup-page h3{
+  text-align: center;
+}
+.password-label{
+  display: flex;
+  justify-content: space-between;
+}
+.password-label > p{
+  cursor: pointer;
+  color: #EC1F41;
+}
+.error-message{
+  color: #EC1F41;
+  font-size: .75rem;
+}
+.form-container{
+  max-width: 30rem;
+  width: 100%;
+}
+@media only screen and (min-width: 600px) {
+  .signup-page{
+      margin: 1rem 5rem;
+  }  
+}

@@ -2,6 +2,7 @@
     margin: 1rem;
     min-height: calc(100vh - 5rem);
 }
+
 .form-group input{
     height: 24px;
     border-radius: 10px;
@@ -82,7 +83,9 @@ button:focus{
 .success{
     color: #52a911
 }
-
+.star-rating-container > p{
+    margin-top: 1rem;
+}
 @media only screen and (min-width: 600px) {
     .add-page{
         margin: 1rem 5rem;
