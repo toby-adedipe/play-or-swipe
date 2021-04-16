@@ -11,18 +11,15 @@ import { v4 as uuidv4 } from 'uuid';
 
 import './App.css';
 
-import HomePage from './pages/HomePage';
-import TopRated from './pages/TopRated';
-import Popular from './pages/Popular';
-import Error404 from './pages/Error404';
-import AddMovie from "./pages/AddMovie";
-
 import Header from './components/Header';
 import Footer from './components/Footer';
 
 import AppContext from './context/AppContext';
-import SearchResults from "./pages/SearchResults";
-import TopNigerian from "./pages/TopNigerianMovies";
+import routes from "./config/routes";
+import { AuthProvider } from "./context";
+import AppRoute from "./config/AppRoute";
+import Movie from "./pages/Movie";
+import { URL } from "./config/url";
 
 
 
@@ -38,12 +35,8 @@ function App() {
   const [error, setError] = useState(null);
   const [cookies, setCookie] = useCookies(["rateToken"]);
 	const [currentCookie, setCurrentCookie] = useState(null);
-
-  //const SERVER = "http://localhost:5000/api/v1"
-  const URL = "https://play-or-swipe.herokuapp.com/api/v1"
-
+  const [currentRating, setCurrentRating] = useState(null);
   
-
   const filterPopular= (data)=>{
     const newData = data.filter((item)=>{
       return item.rating > 4.0;
@@ -97,8 +90,8 @@ function App() {
         setPopular(filtered);
         setTop(filtered);  
         setNigerian(filteredNigerian)
-      }catch(err){
-        setError(err)
+      }catch(error){
+        setError(error.response.data.error)
       }
       setVisible(false);
     };
@@ -122,26 +115,33 @@ function App() {
     setError,
     currentCookie,
     nigerian,
-    handleCookie
+    handleCookie,
+    currentRating,
+    setCurrentRating,
   }
 
   return (
     <CookiesProvider>
-      <AppContext.Provider value={context}>
-        <Router>
-          <Header />
-          <Switch>
-            <Route exact path = "/" component={HomePage} />
-            <Route exact path = "/top-rated" component={TopRated} />
-            <Route exact path = "/top-nigerian" component={TopNigerian} />
-            <Route exact path = "/popular" component={Popular} />
-            <Route exact path = "/add" component={AddMovie} />
-            <Route exact path = "/search" component={SearchResults} />
-            <Route component={Error404} />
-          </Switch>
-          <Footer />
-        </Router>
-      </AppContext.Provider>
+      <AuthProvider>
+        <AppContext.Provider value={context}>
+          <Router>
+            <Header />
+            <Switch>
+              {routes.map((route)=>(
+                <AppRoute
+                  key={route.path}
+                  exact
+                  path={route.path}
+                  component={route.component}
+                  isPrivate={route.isPrivate}
+                />
+              ))}
+              <Route path="/movies/:id" children={<Movie />} />
+            </Switch>
+            <Footer />
+          </Router>
+        </AppContext.Provider>
+      </AuthProvider>
     </CookiesProvider>
   );
 }

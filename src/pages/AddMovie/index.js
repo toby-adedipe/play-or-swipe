@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { storage } from '../../firebase';
+import StarRatingComponent from 'react-star-rating-component';
 
 import './addMovie.css';
+import { URL } from '../../config/url';
 
 const AddMovie = () => {
   const [image, setImage] = useState(null);
@@ -10,10 +12,15 @@ const AddMovie = () => {
   const [year, setYear] = useState("");
   const [genre, setGenre] = useState("");
   const [synopsis, setSynopsis] = useState("");
+  const [location, setLocation] = useState("");
+  const [rating, setRating] = useState(0);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
   const [success, setSuccess] = useState(false);
-  const [location, setLocation] = useState("");
+
+  const handleClick = (nextValue, prevValue, name)=>{
+		setRating(nextValue);
+	}
 
   const handleChange = e =>{
     if(e.target.files[0]){
@@ -21,8 +28,7 @@ const AddMovie = () => {
     }
   }
 
-  const URL = "https://play-or-swipe.herokuapp.com/api/v1/movies"
-
+  
   const resetInput = ()=>{
     setImage(null);
     setTitle("");
@@ -61,14 +67,14 @@ const AddMovie = () => {
             .getDownloadURL()
             .then(async(url) => {
               const postInfo = async()=>{
-                const res = await axios.post(URL, {
+                const res = await axios.post(`${URL}/movies`, {
                   title,
                   year,
                   genre,
                   synopsis,
                   location,
                   img: url,
-                  rating: 5,
+                  rating: rating,
                   ratingFrequency: 0,
                 })
                 if(res.status === 200){
@@ -137,6 +143,17 @@ const AddMovie = () => {
         <div className="image-file">
           <label>Upload Image</label>
           <input type="file" onChange={handleChange} />
+        </div>
+        <div className="star-rating-container">
+          <p>Rate the movie: </p>
+          <StarRatingComponent
+            name="rate"
+            starCount = {5}
+            value={rating}
+            renderStarIcon={()=><ion-icon name="star" id="star-icon"></ion-icon>}
+            starColor={"#EC1F41"}
+            onStarClick={handleClick}
+          />
         </div>
         <button onClick={handleUpload} className="submit-btn">submit</button>
       </div>
