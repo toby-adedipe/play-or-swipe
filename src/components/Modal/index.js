@@ -52,7 +52,7 @@ const Modal = ({data, show, setShowModal}) => {
 				:null
 			}
 			{
-				share
+				!share
 				?(
 					<div className="modal-main">
 						<div className="header-container">
@@ -60,7 +60,7 @@ const Modal = ({data, show, setShowModal}) => {
 								<p className="h3">Rate this film</p>
 						</div>
 						<div className="movie-info">
-							<img src={data.img} alt={data.title} className="movieArt"/>
+							<Link to={`/movies/${data._id}`}><img src={data.img} alt={data.title} className="movieArt"/></Link>
 							<div className="info-container">
 								<div className="title-container">
 									<p className="movie-title">{data.title}</p>
