@@ -4,6 +4,7 @@ import { storage } from '../../firebase';
 import StarRatingComponent from 'react-star-rating-component';
 
 import './addMovie.css';
+import { URL } from '../../config/url';
 
 const AddMovie = () => {
   const [image, setImage] = useState(null);
@@ -27,9 +28,7 @@ const AddMovie = () => {
     }
   }
 
-  const SERVER = "http://localhost:5000/api/v1/movies"
-  //const URL = "https://play-or-swipe.herokuapp.com/api/v1/movies"
-
+  
   const resetInput = ()=>{
     setImage(null);
     setTitle("");
@@ -68,7 +67,7 @@ const AddMovie = () => {
             .getDownloadURL()
             .then(async(url) => {
               const postInfo = async()=>{
-                const res = await axios.post(SERVER, {
+                const res = await axios.post(`${URL}/movies`, {
                   title,
                   year,
                   genre,

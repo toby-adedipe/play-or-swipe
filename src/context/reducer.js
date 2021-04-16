@@ -6,9 +6,12 @@ let user = localStorage.getItem("currentUser")
 let token = localStorage.getItem("currentUser")
   ? JSON.parse(localStorage.getItem("currentUser")).token
   : "";
- 
+let userId = localStorage.getItem("currentUser")
+? JSON.parse(localStorage.getItem("currentUser")).userId
+: "";
 export const initialState = {
   user: "" || user,
+  userId: "" || userId,
   token: "" || token,
   loading: false,
   errorMessage: null
@@ -25,6 +28,7 @@ export const AuthReducer = (initialState, action) => {
       return {
         ...initialState,
         user: action.payload.user,
+        userId: action.payload.userId,
         token: action.payload.token,
         loading: false
       };
@@ -37,6 +41,7 @@ export const AuthReducer = (initialState, action) => {
       return {
         ...initialState,
         user: action.payload.user,
+        userId: action.payload.userId,
         token: action.payload.token,
         loading: false
       };

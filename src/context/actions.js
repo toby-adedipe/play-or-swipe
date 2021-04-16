@@ -1,14 +1,12 @@
 import axios from "axios";
+import { URL } from "../config/url";
 import { ERROR, LOGIN_SUCCESS, REQUEST_LOGIN, REQUEST_SIGNUP } from "./constants";
-
-//const ROOT_URL = 'https://secret-hamlet-03431.herokuapp.com';
-const SERVER = 'http://localhost:5000';
 
 export async function logIn(dispatch, loginPayload) {
 
   try{
     dispatch({ type: REQUEST_LOGIN });
-    let response = await axios.post(`${SERVER}/api/v1/auth/login`, loginPayload)
+    let response = await axios.post(`${URL}/auth/login`, loginPayload)
     let data = response.data;
     
     if(data.success){
@@ -27,7 +25,7 @@ export async function logIn(dispatch, loginPayload) {
 export async function signUp(dispatch, signupPayload){
   try{
     dispatch({ type: REQUEST_SIGNUP });
-    let response = await axios.post(`${SERVER}/api/v1/auth/register`, signupPayload)
+    let response = await axios.post(`${URL}/auth/register`, signupPayload)
     let data = response.data;
     
     if(data.success){

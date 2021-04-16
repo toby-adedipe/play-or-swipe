@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import { logout, useAuthDispatch, } from '../../context';
+import { logout, useAuthDispatch} from '../../context';
 
 const DashboardComp = ({history}) => {
   const dispatch = useAuthDispatch();

@@ -16,7 +16,6 @@ const HomePage = () => {
   return (
     <div className="home-page">
       <Search />
-      
       {
         error
         

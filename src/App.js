@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
+  Route,
 } from "react-router-dom";
 import axios from 'axios';
 import { CookiesProvider } from "react-cookie";
@@ -17,6 +18,8 @@ import AppContext from './context/AppContext';
 import routes from "./config/routes";
 import { AuthProvider } from "./context";
 import AppRoute from "./config/AppRoute";
+import Movie from "./pages/Movie";
+import { URL } from "./config/url";
 
 
 
@@ -32,12 +35,8 @@ function App() {
   const [error, setError] = useState(null);
   const [cookies, setCookie] = useCookies(["rateToken"]);
 	const [currentCookie, setCurrentCookie] = useState(null);
-
-  const SERVER = "http://localhost:5000/api/v1"
-  //const URL = "https://play-or-swipe.herokuapp.com/api/v1"
-
+  const [currentRating, setCurrentRating] = useState(null);
   
-
   const filterPopular= (data)=>{
     const newData = data.filter((item)=>{
       return item.rating > 4.0;
@@ -84,15 +83,15 @@ function App() {
     const fetchData = async()=>{
       setVisible(true)
       try{
-        const res = await axios.get(`${SERVER}/movies`)
+        const res = await axios.get(`${URL}/movies`)
         const filtered = filterPopular(res.data.data);
         const filteredNigerian = filterNigerian(res.data.data);
         setMovies(res.data.data);
         setPopular(filtered);
         setTop(filtered);  
         setNigerian(filteredNigerian)
-      }catch(err){
-        setError(err)
+      }catch(error){
+        setError(error.response.data.error)
       }
       setVisible(false);
     };
@@ -116,7 +115,9 @@ function App() {
     setError,
     currentCookie,
     nigerian,
-    handleCookie
+    handleCookie,
+    currentRating,
+    setCurrentRating,
   }
 
   return (
@@ -135,6 +136,7 @@ function App() {
                   isPrivate={route.isPrivate}
                 />
               ))}
+              <Route path="/movies/:id" children={<Movie />} />
             </Switch>
             <Footer />
           </Router>

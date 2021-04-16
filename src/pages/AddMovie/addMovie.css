@@ -22,6 +22,9 @@
 input:focus, textarea:focus, select:focus{
     outline: none;
 }
+textarea{
+    resize: none;
+}
 
 .form-group{
     display: flex;
@@ -68,6 +71,9 @@ input:focus, textarea:focus, select:focus{
     font-size: 1rem;
     max-height: 2.75rem;
     cursor: pointer;
+}
+.submit-btn:disabled{
+    background: #646464;
 }
 button:focus{
     outline: none;
