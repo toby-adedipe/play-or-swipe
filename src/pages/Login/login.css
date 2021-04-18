@@ -1,0 +1,7 @@
+.login-container{
+  display: flex;
+  align-items: baseline;
+}
+.login-container>input{
+  margin-right: 10px;
+}

@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAuthDispatch } from "../../context";
+import { useAuthDispatch, useAuthState } from "../../context";
 import { signUp } from "../../context/actions";
 import { withRouter } from "react-router";
 
 import "./signup.css";
 import Header from "../../components/Header";
+import Loader from "react-loader-spinner";
 
 const SignUpComp = ({history}) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useAuthDispatch()
+
+  const { loading } = useAuthState();
 
   const onSubmit = async(data) => {
     let payload = data;
@@ -63,7 +66,16 @@ const SignUpComp = ({history}) => {
               />
             </div>
           </div>
-          <input type="submit" className="submit-btn"/>
+          <div className="login-container">
+            <input type="submit" className="submit-btn" value={!loading? "Sign Up": "Signing you up"} disabled={loading}/>
+            <Loader 
+              type="TailSpin"
+              color="#EC1F41"
+              height={20}
+              width={20}
+              visible={loading}
+            />
+          </div>
         </form>
         </div>
       </div>

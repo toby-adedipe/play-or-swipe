@@ -36,11 +36,12 @@ const Movie = () => {
     }
     try {
       let res = await axios.post(`${URL}/movies/${id}/reviews`, payload, config);
-      if(res.movie.success){
+      if(res.data.success){
         window.location.reload(false)
       }
     }catch (error) {
-      setError(error.response.movie.error)
+      console.log(error);
+      //setError(error.response.data.error)
     }
   }; 
   useEffect(()=>{
@@ -57,8 +58,7 @@ const Movie = () => {
         }
         return
       }catch(error){
-        //setError(error.response.movie.error)
-        console.log(error)
+        setError(error.response.data.error)
       }
       setVisible(false);
     };
@@ -134,7 +134,7 @@ const Movie = () => {
                 }
                 
                 </div>
-                <form onSubmit={()=>handleSubmit(onSubmit)} className="review-form">
+                <form onSubmit={handleSubmit(onSubmit)} className="review-form">
                   <p>Leave a review {errors.password && <span className="error-message">Dont forget to add your password.</span>}</p>
                   <textarea 
                     name="text"

@@ -1,6 +1,6 @@
 import Login from '../pages/Login';
 import Dashboard from '../pages/Dashboard';
-import Error404 from '../pages/Error404';
+//import Error404 from '../pages/Error404';
 import HomePage from '../pages/HomePage';
 import TopRated from '../pages/TopRated';
 import Popular from '../pages/Popular';
@@ -8,6 +8,7 @@ import AddMovie from "../pages/AddMovie";
 import SignUp from "../pages/SignUp";
 import SearchResults from "../pages/SearchResults";
 import TopNigerian from '../pages/TopNigerianMovies';
+import Movie from '../pages/Movie';
 
 
 
@@ -58,10 +59,15 @@ const routes =[
     isPrivate: true,
   },
   {
-    path:'/*',
-    component: Error404,
+    path:'/movies/id',
+    component: Movie,
     isPrivate: false,
   },
+  // {
+  //   path:'/*',
+  //   component: Error404,
+  //   isPrivate: false,
+  // },
 ]
  
 export default routes
