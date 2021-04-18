@@ -7,6 +7,7 @@ import Popular from '../pages/Popular';
 import AddMovie from "../pages/AddMovie";
 import SignUp from "../pages/SignUp";
 import SearchResults from "../pages/SearchResults";
+import TopNigerian from '../pages/TopNigerianMovies';
 
 
 
@@ -37,6 +38,11 @@ const routes =[
     isPrivate: false,
   },
   {
+    path:'/top-nigerian',
+    component: TopNigerian,
+    isPrivate: false,
+  },
+  {
     path:'/add',
     component: AddMovie,
     isPrivate: false,
@@ -52,7 +58,7 @@ const routes =[
     isPrivate: true,
   },
   {
-    path:'/',
+    path:'/*',
     component: Error404,
     isPrivate: false,
   },

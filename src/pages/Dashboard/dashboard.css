@@ -1,0 +1,23 @@
+.dashboard{
+  min-height: calc(100vh);
+}
+.dashboard-container{
+  margin: 1rem;
+}
+#logout-btn{
+  display: flex;
+  align-items: center;
+  padding: .5rem;
+  border-radius: 5px;
+  background: red;
+  color: #fff;
+}
+#logout-icon{
+  font-size: 1rem;
+  padding-right: 5px;
+}
+@media only screen and (min-width: 600px) {
+  .dashboard-container{
+    margin: 1rem 5rem;
+  }  
+}

@@ -5,6 +5,7 @@ import './topRated.css';
 
 import SearchResults from '../SearchResults';
 import Search from '../../components/Search';
+import Header from '../../components/Header';
 
 const TopRated = () => {
   const { top, searchVal } = useContext(AppContext);
@@ -41,6 +42,7 @@ const TopRated = () => {
 
   return (
     <>
+      <Header />
       <Search />
       {
         searchVal.length>0
@@ -70,8 +72,8 @@ const TopRated = () => {
                       <p>Industry: </p>
                       <select onChange={(element)=>setLocationVal(element.target.value)} value={locationVal}>
                         <option value="" defaultValue></option>
-                        <option value="nigeria">Nigeria</option>
-                        <option value="america">America</option>
+                        <option value="nigeria">Nollywood</option>
+                        <option value="america">Hollywood</option>
                       </select>
                     </div>                
                   </div>

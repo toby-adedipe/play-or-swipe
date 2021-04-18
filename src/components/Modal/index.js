@@ -6,6 +6,7 @@ import Loader from 'react-loader-spinner'
 import AppContext from "../../context/AppContext";
 import { Link } from "react-router-dom";
 import { URL } from "../../config/url";
+import { useAuthState } from "../../context";
 
 const Modal = ({data, show, setShowModal}) => {
 	const showHideClassName = show ? " modal display-block" : "modal display-none";
@@ -13,6 +14,7 @@ const Modal = ({data, show, setShowModal}) => {
 	const [share, setShare] = useState(false);
 	const [visible, setVisible] = useState(false);
 
+	const { userId } = useAuthState();
 	const { currentCookie } = useContext(AppContext);
 
 	const handleClick = (nextValue, prevValue, name)=>{
@@ -27,6 +29,10 @@ const Modal = ({data, show, setShowModal}) => {
 				rating: newRating,
 				ratingFrequency: data.ratingFrequency+1,
 				cookieToken: currentCookie,
+			})
+			await axios.put(`${URL}/users/${userId}`, {
+				movieId: data._id,
+				rating: newRating,
 			})
 			setShare(true);
 		}catch(error){
