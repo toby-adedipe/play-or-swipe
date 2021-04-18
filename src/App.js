@@ -11,9 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import './App.css';
 
-import Header from './components/Header';
 import Footer from './components/Footer';
-
 import AppContext from './context/AppContext';
 import routes from "./config/routes";
 import { AuthProvider } from "./context";
@@ -125,7 +123,6 @@ function App() {
       <AuthProvider>
         <AppContext.Provider value={context}>
           <Router>
-            <Header />
             <Switch>
               {routes.map((route)=>(
                 <AppRoute

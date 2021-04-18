@@ -1,4 +1,4 @@
-.movieContainer{
+.movie-container{
     margin-right: 1rem;
     width: 12.25rem;
     display: flex;
@@ -19,6 +19,7 @@
     line-height: 22px;
     color: #FFFFFF;
     text-align: center;
+    width: 10rem;
 }
 .rating{
     font-style: normal;

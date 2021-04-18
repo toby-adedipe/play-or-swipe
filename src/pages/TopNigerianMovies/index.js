@@ -5,6 +5,7 @@ import './TopNigerian.css';
 
 import SearchResults from '../SearchResults';
 import Search from '../../components/Search';
+import Header from '../../components/Header';
 
 const TopNigerian = () => {
   const { nigerian, searchVal } = useContext(AppContext);
@@ -40,6 +41,7 @@ const TopNigerian = () => {
 
   return (
     <>
+      <Header />
       <Search />
       {
         searchVal.length>0
@@ -68,9 +70,9 @@ const TopNigerian = () => {
                     <div className="filter-options">
                       <p>Industry: </p>
                       <select onChange={(element)=>setLocationVal(element.target.value)} value={locationVal}>
-                        <option value=""></option>
-                        <option value="nigeria" defaultValue>Nigeria</option>
-                        <option value="america">America</option>
+                        <option value="" defaultValue></option>
+                        <option value="nigeria">Nollywood</option>
+                        <option value="america">Hollywood</option>
                       </select>
                     </div>                
                   </div>

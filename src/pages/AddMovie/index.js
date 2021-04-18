@@ -5,6 +5,7 @@ import StarRatingComponent from 'react-star-rating-component';
 
 import './addMovie.css';
 import { URL } from '../../config/url';
+import Header from '../../components/Header';
 
 const AddMovie = () => {
   const [image, setImage] = useState(null);
@@ -111,6 +112,7 @@ const AddMovie = () => {
           ? <p className="success">{success}</p>
           : null
         }
+        <Header />
         <h3>Add a movie</h3>
         <div className="title-group">
           <div className="form-group title-container">
