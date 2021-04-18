@@ -31,10 +31,12 @@ const Modal = ({data, show, setShowModal}) => {
 				ratingFrequency: data.ratingFrequency+1,
 				cookieToken: currentCookie,
 			})
-			await axios.put(`${URL}/users/${userId}`, {
-				movieId: data._id,
-				rating: newRating,
-			})
+			if(userId){
+				await axios.put(`${URL}/users/${userId}`, {
+					movieId: data._id,
+					rating: newRating,
+				})
+			}
 			setShare(true);
 		}catch(error){
 			//HANDLE THIS ERROR
