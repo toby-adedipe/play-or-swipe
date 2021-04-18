@@ -13,6 +13,7 @@ const Modal = ({data, show, setShowModal}) => {
 	const [persRating, setPersRating] = useState(0);
 	const [share, setShare] = useState(false);
 	const [visible, setVisible] = useState(false);
+	const [error, setError] = useState(null);
 
 	const { userId } = useAuthState();
 	const { currentCookie } = useContext(AppContext);
@@ -37,7 +38,7 @@ const Modal = ({data, show, setShowModal}) => {
 			setShare(true);
 		}catch(error){
 			//HANDLE THIS ERROR
-			console.log(error);
+			setError(error.response.data.error);
 		}
 		setVisible(false)
 	}
@@ -65,6 +66,7 @@ const Modal = ({data, show, setShowModal}) => {
 							<ion-icon name="close-outline" id="close-btn" onClick={()=>setShowModal(false)}></ion-icon>
 								<p className="h3">Rate this film</p>
 						</div>
+						<p className="error">{error && error}</p>
 						<div className="movie-info">
 							<Link to={`/movies/${data._id}`}><img src={data.img} alt={data.title} className="movieArt"/></Link>
 							<div className="info-container">
