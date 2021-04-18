@@ -10,16 +10,10 @@
 .popular-h1{
     font-weight: bold;
     font-size: 1.25rem;
-    line-height: 29px;
-    margin: 1rem;
-    letter-spacing: 0.04em;
     text-transform: uppercase;
 }
 
 @media only screen and (min-width: 600px) {
-    .popular-h1{
-        margin: 0 5rem;
-    }
     .popular-movies{
         margin: 0 5rem;
     }
