@@ -1,22 +1,23 @@
 import "./modal.css";
 import StarRatingComponent from 'react-star-rating-component';
-import axios from "axios";
 import { useState, useContext } from "react";
 import Loader from 'react-loader-spinner'
 import AppContext from "../../context/AppContext";
 import { Link } from "react-router-dom";
-import { URL } from "../../config/url";
-import { useAuthState } from "../../context";
+import { useAuthState, useAuthDispatch } from "../../context";
+import { updateUser } from "../../context/actions";
 
 const Modal = ({data, show, setShowModal}) => {
-	const showHideClassName = show ? " modal display-block" : "modal display-none";
 	const [persRating, setPersRating] = useState(0);
 	const [share, setShare] = useState(false);
 	const [visible, setVisible] = useState(false);
 	const [error, setError] = useState(null);
 
-	const { userId } = useAuthState();
+	const dispatch = useAuthDispatch();
+	const { userId, token } = useAuthState();
 	const { currentCookie } = useContext(AppContext);
+
+	const showHideClassName = show ? " modal display-block" : "modal display-none";
 
 	const handleClick = (nextValue, prevValue, name)=>{
 		setPersRating(nextValue);
@@ -25,22 +26,21 @@ const Modal = ({data, show, setShowModal}) => {
 	const sendRate = async()=>{
 		setVisible(true)
 		let newRating = (((data.ratingFrequency*data.rating)+persRating)/(data.ratingFrequency+1)).toFixed(2);
-		try{
-			await axios.put(`${URL}/movies/${data._id}`, {
-				rating: newRating,
-				ratingFrequency: data.ratingFrequency+1,
-				cookieToken: currentCookie,
-			})
-			if(userId){
-				await axios.put(`${URL}/users/${userId}`, {
-					movieId: data._id,
-					rating: newRating,
-				})
-			}
-			setShare(true);
-		}catch(error){
-			//HANDLE THIS ERROR
-			setError(error.response.data.error);
+
+		let payload = {
+			ratingFrequency: data.ratingFrequency+1,
+			cookieToken: currentCookie,
+			movieId: data._id,
+			rating: newRating,
+			token,
+			userId,
+		}
+
+		let res = await updateUser(dispatch, payload);
+		if(res.success){
+			setShare(true)
+		}else{
+			setError(res.error)
 		}
 		setVisible(false)
 	}

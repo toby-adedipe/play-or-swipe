@@ -19,7 +19,7 @@ const Movie = () => {
   const [reviews, setReviews] = useState(null);
   const user = useAuthState();
 
-    const onSubmit = async(movie) => {
+  const onSubmit = async(movie) => {
     let config = {
       headers: {
         "Authorization": `Bearer ${user.token}`,
@@ -34,6 +34,7 @@ const Movie = () => {
       userName: user.user,
       movie: id,
     }
+    
     try {
       let res = await axios.post(`${URL}/movies/${id}/reviews`, payload, config);
       if(res.data.success){

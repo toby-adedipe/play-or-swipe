@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
-import Categories from '../../components/Categories';
-import Search from '../../components/Search';
+import Categories from '../../containers/Categories';
+import Search from '../../containers/Search';
 import AppContext from '../../context/AppContext';
 import SearchResults from '../SearchResults';
 import Loader from 'react-loader-spinner';

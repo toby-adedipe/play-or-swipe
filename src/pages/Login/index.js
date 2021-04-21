@@ -6,6 +6,7 @@ import { useAuthDispatch, useAuthState } from "../../context";
 import { withRouter } from "react-router";
 import Header from "../../components/Header";
 import Loader from "react-loader-spinner";
+import { Link } from "react-router-dom";
 
 const LoginComp = ({history}) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -66,6 +67,10 @@ const LoginComp = ({history}) => {
               width={20}
               visible={loading}
             />
+          </div>
+          <div className="alt-option-container">
+            <p>Don't have an account?</p>
+            <Link to="/signup" className="alt-option">Sign Up</Link>
           </div>
         </form>
         </div>

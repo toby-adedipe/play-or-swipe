@@ -5,3 +5,10 @@
 .login-container>input{
   margin-right: 10px;
 }
+.alt-option-container{
+  margin-top: 1rem;
+}
+.alt-option{
+  color: rgb(65, 65, 255);
+  text-decoration: underline;
+}

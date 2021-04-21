@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../components/Header";
-import SearchDiv from "../../components/SearchDiv";
+import SearchDiv from "../../containers/SearchDiv";
 import AppContext from "../../context/AppContext";
 
 import './search-results.css'
