@@ -7,13 +7,14 @@ import { withRouter } from "react-router";
 import "./signup.css";
 import Header from "../../components/Header";
 import Loader from "react-loader-spinner";
+import { Link } from "react-router-dom";
 
 const SignUpComp = ({history}) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useAuthDispatch()
 
-  const { loading } = useAuthState();
+  const { loading, errorMessage } = useAuthState();
 
   const onSubmit = async(data) => {
     let payload = data;
@@ -35,6 +36,12 @@ const SignUpComp = ({history}) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <h3>Sign Up</h3>
           <div className="">
+            <p className="error">
+              {
+                errorMessage === "Duplicate field value entered"
+                ? "This email has been used already"
+                :errorMessage
+                }</p>
             <div className="form-group">
               <label>Full Name {errors.fullName && <span className="error-message">Please add your fullname.</span>}</label>
               <input 
@@ -75,6 +82,10 @@ const SignUpComp = ({history}) => {
               width={20}
               visible={loading}
             />
+          </div>
+          <div className="alt-option-container">
+            <p>Already have an account?</p>
+            <Link to="/login" className="alt-option">Sign In</Link>
           </div>
         </form>
         </div>

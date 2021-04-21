@@ -96,7 +96,10 @@ const AddMovie = () => {
     setSuccess(null)
   }
 
+  console.log(image);
   return (
+    <>
+    <Header />
     <div className="add-page">
     {
       loading
@@ -112,7 +115,6 @@ const AddMovie = () => {
           ? <p className="success">{success}</p>
           : null
         }
-        <Header />
         <h3>Add a movie</h3>
         <div className="title-group">
           <div className="form-group title-container">
@@ -161,6 +163,7 @@ const AddMovie = () => {
       </div>
     }
     </div>
+  </>
   );
 };
 

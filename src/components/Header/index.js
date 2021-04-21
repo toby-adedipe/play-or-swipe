@@ -10,7 +10,7 @@ const Header = () => {
       backgroundSize: 'cover',
     }} className="header">
       <Link to="/"><p id="logo">Play or Swipe</p></Link>
-      <p id="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+      <p id="desc">See what people think of that move, and also let people know what you think of them</p>
     </header>
   );
 };

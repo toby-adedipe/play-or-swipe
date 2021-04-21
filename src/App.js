@@ -12,11 +12,11 @@ import { v4 as uuidv4 } from 'uuid';
 import './App.css';
 
 import Footer from './components/Footer';
+import Error404 from './pages/Error404';
 import AppContext from './context/AppContext';
 import routes from "./config/routes";
 import { AuthProvider } from "./context";
 import AppRoute from "./config/AppRoute";
-import Movie from "./pages/Movie";
 import { URL } from "./config/url";
 
 
@@ -89,7 +89,7 @@ function App() {
         setTop(filtered);  
         setNigerian(filteredNigerian)
       }catch(error){
-        setError(error.response.data.error)
+        setError("There was a problem connecting to the network")
       }
       setVisible(false);
     };
@@ -118,6 +118,7 @@ function App() {
     setCurrentRating,
   }
 
+
   return (
     <CookiesProvider>
       <AuthProvider>
@@ -129,11 +130,12 @@ function App() {
                   key={route.path}
                   exact
                   path={route.path}
+                  type={route.type}
                   component={route.component}
                   isPrivate={route.isPrivate}
                 />
               ))}
-              <Route path="/movies/:id" children={<Movie />} />
+              <Route exact component={Error404}/>
             </Switch>
             <Footer />
           </Router>

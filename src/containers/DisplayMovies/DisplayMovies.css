@@ -1,0 +1,7 @@
+.display-movies{
+  margin-bottom: 1rem;
+}
+.edit-btn >button{
+  border-radius: 5px;
+  padding: .5rem .75rem;
+}

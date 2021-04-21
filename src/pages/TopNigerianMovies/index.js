@@ -1,10 +1,10 @@
 import AppContext from '../../context/AppContext';
 import { useContext, useState, useEffect } from "react";
-import Movie from "../../components/Movie";
+import Movie from "../../containers/Movie";
 import './TopNigerian.css';
 
 import SearchResults from '../SearchResults';
-import Search from '../../components/Search';
+import Search from '../../containers/Search';
 import Header from '../../components/Header';
 
 const TopNigerian = () => {

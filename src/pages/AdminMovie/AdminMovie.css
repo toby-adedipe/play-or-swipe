@@ -1,0 +1,20 @@
+.edit-page{
+  margin: 1rem;
+  min-height: 100vh;
+}
+.loader-container{
+  display: flex;
+  justify-content: center;
+}
+.poster{
+  display: flex;
+  flex-direction: column;
+}
+.poster-img{
+  display: flex;
+}
+@media only screen and (min-width: 600px) {
+  .edit-page{
+    margin: 1rem 5rem;
+  }  
+}

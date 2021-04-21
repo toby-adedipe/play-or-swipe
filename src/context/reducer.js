@@ -1,4 +1,17 @@
-import { ERROR, LOGIN_SUCCESS, LOGOUT, REQUEST_LOGIN, REQUEST_SIGNUP, SIGNUP_SUCCESS } from "./constants";
+import { 
+  ERROR, 
+  LOGIN_SUCCESS, 
+  LOGOUT, 
+  REQUEST_LOGIN, 
+  REQUEST_SIGNUP, 
+  SIGNUP_SUCCESS, 
+  REQUEST_UPDATE_USER, 
+  UPDATE_USER, 
+  REQUEST_MOVIE, 
+  GET_MOVIE_SUCCESS, 
+  ON_SUCCESS, 
+  REQUEST_ADMIN_MOVIE_UPDATE 
+} from "./constants";
 
 let user = localStorage.getItem("currentUser")
   ? JSON.parse(localStorage.getItem("currentUser")).user
@@ -45,19 +58,49 @@ export const AuthReducer = (initialState, action) => {
         token: action.payload.token,
         loading: false
       };
+    case REQUEST_UPDATE_USER:
+      return {
+        ...initialState,
+        loading: true
+    }
+    case UPDATE_USER:
+      return{
+        ...initialState,
+        loading: false
+      }
+    case REQUEST_MOVIE:
+      return {
+        ...initialState,
+        loading: true
+      }
+    case GET_MOVIE_SUCCESS:
+      return{
+        ...initialState,
+        loading: false
+      }
     case LOGOUT:
       return {
         ...initialState,
         user: "",
         token: ""
       };
+      case REQUEST_ADMIN_MOVIE_UPDATE:
+        return {
+          ...initialState,
+          loading: true
+        }
+      case ON_SUCCESS:
+        return{
+          ...initialState,
+          loading: false
+        }
     case ERROR:
       return {
         ...initialState,
         loading: false,
         errorMessage: action.error
       };
- 
+    
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
