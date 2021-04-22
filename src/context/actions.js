@@ -28,6 +28,7 @@ export async function logIn(dispatch, loginPayload) {
     return;
   }catch(error){
     dispatch({ type: ERROR, error: error });
+    return error;
   }
 }
 
