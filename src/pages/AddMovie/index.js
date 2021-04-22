@@ -135,8 +135,8 @@ const AddMovie = () => {
             <label>Location</label>
             <select onChange={(element)=>setLocation(element.target.value)} value={location}>
               <option value="" defaultValue></option>
-              <option value="nigeria" >Nigeria</option>
-              <option value="america">America</option>
+              <option value="nigeria" >Nollywood</option>
+              <option value="america">Hollywood</option>
             </select>
           </div>
         </div>

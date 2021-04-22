@@ -41,8 +41,8 @@ const Form = ({data, onSubmit, status}) => {
           <div className="form-group location-container">
             <label>Industry {errors.location && <span className="error">Please add an industry</span>}</label>
             <select {...register("location")} defaultValue={data.location}>
-              <option value="nigeria" >Nigeria</option>
-              <option value="america">America</option>
+              <option value="nigeria" >Nollywood</option>
+              <option value="america">Hollywood</option>
             </select>
           </div>
         </div>
