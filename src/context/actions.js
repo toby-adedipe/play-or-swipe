@@ -152,7 +152,7 @@ export async function getCurrentUser (dispatch, payload){
     const res = await axios.get(`${URL}/auth/me`, config);
     return res.data;
   }catch(error){
-    dispatch({ type: ERROR, error: error.response.data.error });
+    //dispatch({ type: ERROR, error: error.response.data.error });
   }
 }
 export async function logout(dispatch) {
