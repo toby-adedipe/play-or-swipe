@@ -43,6 +43,7 @@ const Form = ({data, onSubmit, status}) => {
             <select {...register("location")} defaultValue={data.location}>
               <option value="nigeria" >Nollywood</option>
               <option value="america">Hollywood</option>
+              <option value="others">Others</option>
             </select>
           </div>
         </div>

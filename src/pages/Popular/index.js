@@ -74,6 +74,7 @@ const TopRated = () => {
                         <option value="" defaultValue></option>
                         <option value="nigeria">Nollywood</option>
                         <option value="america">Hollywood</option>
+                        <option value="others">Others</option>
                       </select>
                     </div>                
                   </div>

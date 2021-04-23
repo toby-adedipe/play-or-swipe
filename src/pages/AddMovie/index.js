@@ -122,7 +122,7 @@ const AddMovie = () => {
             <input type="text" onChange={(e)=>handleTitleInput(e.target.value)} value={title} className="title-input" />
           </div>
           <div className="form-group year-container">
-            <label>Release Date</label>
+            <label>Release Year</label>
             <input type="text" onChange={(e)=>setYear(e.target.value)} value={year} className="year-input" />
           </div>
         </div>
@@ -135,8 +135,9 @@ const AddMovie = () => {
             <label>Location</label>
             <select onChange={(element)=>setLocation(element.target.value)} value={location}>
               <option value="" defaultValue></option>
-              <option value="nigeria" >Nollywood</option>
+              <option value="nigeria">Nollywood</option>
               <option value="america">Hollywood</option>
+              <option value="others">Others</option>
             </select>
           </div>
         </div>
