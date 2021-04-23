@@ -13,7 +13,7 @@ const LoginComp = ({history}) => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useAuthDispatch();
 
-  const { loading } = useAuthState();
+  const { loading, errorMessage } = useAuthState();
 
   const onSubmit = async(data) => {
     let payload = data;
@@ -36,6 +36,7 @@ const LoginComp = ({history}) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <h3>Log In</h3>
           <div className="">
+            <p className="error">{errorMessage && errorMessage}</p>
             <div className="form-group">
               <label>Email {errors.email && <span className="error-message">Please add an email.</span>}</label>
               <input 
