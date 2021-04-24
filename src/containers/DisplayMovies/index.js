@@ -26,7 +26,12 @@ const DisplayMovies = ({data}) => {
             />
             <p className="rating">{data.rating}</p>
           </div>
-          <Link to={`/admin/movies/${data._id}`} className="edit-btn"><button>Edit</button></Link>
+          <Link to={`/admin/movies/${data._id}`} className="edit-link">
+            <button className="edit-btn">
+              <ion-icon name="pencil-outline" id="edit-icon"></ion-icon>
+              Edit
+            </button>
+            </Link>
         </div>
       </div>
     </div>

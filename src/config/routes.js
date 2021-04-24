@@ -12,6 +12,7 @@ import AdminDashboard from '../pages/AdminDashboard';
 import AdminMovie from '../pages/AdminMovie';
 import AllMovies from '../pages/AllMovies';
 import PendingMovies from '../pages/PendingMovies';
+import AdminAdd from '../pages/AdminAdd';
 
 
 
@@ -98,6 +99,12 @@ const routes =[
   {
     path:'/admin/movies/:id',
     component: AdminMovie,
+    isPrivate: true,
+    type: 'admin',
+  },
+  {
+    path:'/admin/add',
+    component: AdminAdd,
     isPrivate: true,
     type: 'admin',
   },

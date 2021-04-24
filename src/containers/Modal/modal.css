@@ -138,7 +138,8 @@ hr{
   display:block;
   width: 96%;               
   background-color:#cfcfcf;
-  height: 1px;margin-top: .5rem;
+  height: 1px;
+  margin-top: .5rem;
 }
 .big-hr{
   width: 100%;

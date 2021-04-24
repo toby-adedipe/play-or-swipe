@@ -13,6 +13,9 @@ body{
   font-family: 'Tajawal', sans-serif;
   color: #ffffff;
 }
+button{
+  cursor: pointer;
+}
 .spinner-container{
   position: fixed;
   top: 0;

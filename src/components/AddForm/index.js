@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import Loader from "react-loader-spinner";
-import './Form.css';
+import StarRatingComponent from 'react-star-rating-component';
 
-const Form = ({data, onSubmit, status}) => {
+const AddForm = ({onSubmit, status, rating, handleClick}) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   return (
@@ -13,7 +13,6 @@ const Form = ({data, onSubmit, status}) => {
             <label>Name of Movie {errors.title && <span className="error">Please add a movie title</span>}</label>
             <input
               type="text"
-              defaultValue={data.title} 
               {...register('title', {required: true})}
               className="title-input" 
             />
@@ -22,7 +21,6 @@ const Form = ({data, onSubmit, status}) => {
             <label>Release Year {errors.year && <span className="error">Please add a release year</span>}</label>
             <input
               type="text"
-              defaultValue={data.year} 
               {...register('year', {required: true})}
               className="year-input" 
             />
@@ -33,55 +31,50 @@ const Form = ({data, onSubmit, status}) => {
             <label>Genre {errors.genre && <span className="error">Please add a genre</span>}</label>
             <input
               type="text"
-              defaultValue={data.genre} 
               {...register('genre', {required: true})}
               className="genre-input" 
             />
           </div>
           <div className="form-group location-container">
             <label>Industry {errors.location && <span className="error">Please add an industry</span>}</label>
-            <select {...register("location")} defaultValue={data.location}>
+            <select {...register("location")}>
               <option value="nigeria" >Nollywood</option>
               <option value="america">Hollywood</option>
               <option value="others">Others</option>
             </select>
           </div>
         </div>
-        <div className="form-group">
-          <label>Status {errors.location && <span className="error">Please choose the status of the movie</span>}</label>
-          <select {...register("status")} defaultValue={data.status}>
-            <option value="approved" >Approved</option>
-            <option value="pending" defaultValue>Pending</option>
-            <option value="disapproved">Disapproved</option>
-          </select>
+          <div className="form-group">
+            <label>Synopsis {errors.synopsis && <span className="error">Please add a synopsis</span>}</label>
+            <textarea 
+              name="text"
+              className="year-input"
+              type="text"
+              {...register('synopsis', { required: true })}
+              cols="50"
+              rows="6"
+            />
+          </div>
+          <div className="poster">
+            <label>Upload Poster </label>
+            <input
+              type="file" 
+              {...register('image')}
+            />
+          </div>
         </div>
-        <div className="form-group">
-          <label>Synopsis {errors.synopsis && <span className="error">Please add a synopsis</span>}</label>
-          <textarea 
-            name="text"
-            className="year-input"
-            type="text"
-            {...register('synopsis', { required: true })}
-            cols="50"
-            rows="6"
-            defaultValue={data.synopsis}
+        <div className="rating-container">
+          <StarRatingComponent
+            name="rate"
+            starCount = {5}
+            value={rating}
+            renderStarIcon={()=><ion-icon name="star" id="star-icon"></ion-icon>}
+            starColor={"#EC1F41"}
+            onStarClick={handleClick}
           />
-        </div>
-        <div className="poster">
-          <label>Change Poster? </label>
-          <img 
-            src={data.img}
-            alt={data.title}
-            className="search-results-image"
-          />
-          <input
-            type="file" 
-            {...register('image')}
-          />
-        </div>
         </div>
         <div className="submit-loader-conatainer">
-          <input type="submit" className={"submit-btn"} />
+          <input type="submit" className={"submit-btn"}  disabled={status} value={status?"Submitting":"Submit"} />
           <Loader 
             type="TailSpin"
             color="#EC1F41"
@@ -94,4 +87,4 @@ const Form = ({data, onSubmit, status}) => {
   );
 };
 
-export default Form;
+export default AddForm;

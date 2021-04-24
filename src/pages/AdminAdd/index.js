@@ -3,13 +3,12 @@ import axios from 'axios';
 
 import { useAuthDispatch, useAuthState } from '../../context';
 import AddForm from '../../components/AddForm';
-import './addMovie.css';
-import Header from '../../components/Header';
 import { getCurrentUser } from '../../context/actions';
 import { storage } from '../../firebase';
 import { URL } from '../../config/url';
+import AdminHeader from '../../components/AdminHeader';
 
-const AddMovie = () => {
+const AdminAdd = () => {
   const dispatch = useAuthDispatch();
   const [error, setError] = useState(null);
   const { token } = useAuthState();
@@ -129,7 +128,7 @@ const AddMovie = () => {
 
   return (
     <>
-      <Header />
+      <AdminHeader />
       <div className="add-page">
       {
         <div className="add-form">
@@ -157,4 +156,4 @@ const AddMovie = () => {
   );
 };
 
-export default AddMovie;
+export default AdminAdd;

@@ -1,9 +1,13 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Loader from 'react-loader-spinner';
 import { useParams } from 'react-router';
+import AdminHeader from '../../components/AdminHeader';
 import Form from '../../components/Form';
+import { URL } from '../../config/url';
 import { useAuthDispatch, useAuthState } from '../../context';
-import { getMovie, updateMovie } from '../../context/actions';
+import { getMovie } from '../../context/actions';
+import { storage } from '../../firebase';
 
 import './AdminMovie.css';
 
@@ -13,6 +17,7 @@ const AdminMovie = () => {
   const { token, loading } = useAuthState();
   const [movie, setMovie] = useState(null);
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
   const [updating, setUpdating] = useState(false);
 
   useEffect(()=>{
@@ -36,6 +41,79 @@ const AdminMovie = () => {
     fetchMovie();
   }, [dispatch, token, id])
 
+  async function updateMovie(dispatch, payload){
+
+    let config = {
+      headers: {
+        "Authorization": `Bearer ${payload.token}`,
+        "Content-Type": "application/json",
+        "Accept": "*/*"
+      }
+    }
+    
+    try{
+      if(payload.image.length>0){
+        const image = payload.image[0];
+        const uploadTask = storage.ref(`images/${image.name}`).put(image);
+        uploadTask.on(
+          "state_changed",
+          snapshot => {},
+          error =>{
+            console.log(error);
+          },
+          ()=>{
+            storage
+              .ref("images")
+              .child(image.name)
+              .getDownloadURL()
+              .then(async(url) => {
+                const postInfo = async()=>{
+                  const res = await axios.put(`${URL}/admin/movies/${payload.id}`, {
+                    title: payload.title,
+                    year: payload.year,
+                    genre: payload.genre,
+                    synopsis: payload.synopsis,
+                    location: payload.location,
+                    img: url,
+                    rating: payload.rating,
+                    status: payload.status,
+                    ratingFrequency: payload.ratingFrequency,          
+                  },  config);
+                  if(res.data.success){
+                    setSuccess(true)
+                    setUpdating(false)
+                  }else{
+                    setSuccess(false)
+                    setUpdating(false)
+                  }
+                }
+                postInfo();
+              })
+          })
+      }else{
+        const res = await axios.put(`${URL}/admin/movies/${payload.id}`, {
+          title: payload.title,
+          year: payload.year,
+          genre: payload.genre,
+          synopsis: payload.synopsis,
+          location: payload.location,
+          rating: payload.rating,
+          status: payload.status,
+          ratingFrequency: payload.ratingFrequency,
+        },  config)
+        if(res.data.success){
+          setSuccess(true)
+          setUpdating(false)
+        }else{
+          setSuccess(false)
+          setUpdating(false)
+        }
+      }
+    }catch(error){
+      setError(error.response.data.error);
+      setUpdating(false)
+    }
+  }
 
   const onSubmit = async(data)=>{
     setUpdating(true)
@@ -45,37 +123,46 @@ const AdminMovie = () => {
       id,
     };
 
-    try {
-      await updateMovie(dispatch, payload)
-      setUpdating(false)
-    } catch (error) {
-      setUpdating(false)
-      setError(error);
-    }
+    updateMovie(dispatch, payload)
+    // try {
+    //   await updateMovie(dispatch, payload)
+    //   setUpdating(false)
+    // } catch (error) {
+    //   setUpdating(false)
+    //   setError(error);
+    // }
   }
   return (
-    <div className="edit-page">
-    {
-      loading
-      ? <div className="loader-container">
-          <Loader 
-            type="TailSpin"
-            color="#EC1F41"
-            height={40}
-            width={40}
-            visible={loading}
-          />
-        </div>
-      :error
-        ?<p>An error occured</p>
-        :movie
-          ? <div>
-              <h3>Edit {movie.title}</h3>
-              <Form data={movie} token={token} onSubmit={onSubmit} status={updating}/>
-            </div>
-          : null 
-    }
-    </div>
+    <>
+      <AdminHeader />
+      <div className="edit-page">
+      {
+        loading
+        ? <div className="loader-container">
+            <Loader 
+              type="TailSpin"
+              color="#EC1F41"
+              height={40}
+              width={40}
+              visible={loading}
+            />
+          </div>
+        :error
+          ?<p>An error occured</p>
+          :movie
+            ? <div>
+                <h3>Edit {movie.title}</h3>
+                {
+                  success
+                  ? <p className="success">Movie successfully updated</p>
+                  : null
+                }
+                <Form data={movie} token={token} onSubmit={onSubmit} status={updating}/>
+              </div>
+            : null 
+      }
+      </div>
+    </>
   );
 };
 

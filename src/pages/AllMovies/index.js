@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import AdminHeader from "../../components/AdminHeader";
 import DisplayMovies from "../../containers/DisplayMovies";
 import { getAllMovies } from "../../context/actions";
+import './AllMovies.css';
 
 const AllMovies = () => {
   const [movies, setMovies] = useState(null);
@@ -32,12 +33,12 @@ const AllMovies = () => {
       <div className="dashboard">
         <div className="dashboard-container">
           <p>{error && error}</p>
-          <p>Here's a list of Approved movies</p>
+          <p style={{textAlign: 'center'}}>Here's a list of Approved movies</p>
           {
             loading
             ? <p>Loading Data</p>
             : (
-                <div>
+                <div className="display-movies-container">
                   {
                     movies
                     ? movies.map(movie=><DisplayMovies data={movie} key={movie._id} />)

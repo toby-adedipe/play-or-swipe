@@ -36,8 +36,8 @@ const PendingMovies = () => {
       <div className="dashboard">
         <div className="dashboard-container">
           <p>{error && error}</p>
-          <p>Here's a list of movies pending your approval</p>
-          <div>
+          <p style={{textAlign: 'center'}}>Here's a list of movies pending your approval</p>
+          <div className="display-movies-container">
             {
               movies
               ? movies.map(movie=><DisplayMovies data={movie} key={movie._id} />)

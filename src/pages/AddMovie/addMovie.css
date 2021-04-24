@@ -32,14 +32,12 @@ textarea{
     margin: 1rem 0;
 }
 .add-form{
-    margin: 1rem;
     width: 90%;
     max-width: 30rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     color: #fff;
-    height: 75vh;
 }
 
 .title-group{

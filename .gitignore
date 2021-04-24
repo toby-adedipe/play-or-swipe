@@ -10,6 +10,7 @@
 
 # production
 /config/url.js
+.rules
 # misc
 .DS_Store
 .env.local

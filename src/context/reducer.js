@@ -10,7 +10,7 @@ import {
   REQUEST_MOVIE, 
   GET_MOVIE_SUCCESS, 
   ON_SUCCESS, 
-  REQUEST_ADMIN_MOVIE_UPDATE 
+  REQUEST_CHANGE 
 } from "./constants";
 
 let user = localStorage.getItem("currentUser")
@@ -84,7 +84,7 @@ export const AuthReducer = (initialState, action) => {
         user: "",
         token: ""
       };
-      case REQUEST_ADMIN_MOVIE_UPDATE:
+      case REQUEST_CHANGE:
         return {
           ...initialState,
           loading: true

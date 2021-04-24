@@ -27,7 +27,7 @@ export async function logIn(dispatch, loginPayload) {
     dispatch({ type: ERROR, error: "Failed to Sign Up" });
     return;
   }catch(error){
-    dispatch({ type: ERROR, error: error });
+    dispatch({ type: ERROR, error: error.response.data.error });
     return error;
   }
 }
@@ -159,6 +159,72 @@ export async function logout(dispatch) {
   dispatch({ type: 'LOGOUT' });
   localStorage.removeItem('currentUser');
   localStorage.removeItem('token');
+}
+
+export async function addMovie(dispatch, payload){
+
+  let config = {
+    headers: {
+      "Authorization": `Bearer ${payload.token}`,
+      "Content-Type": "application/json",
+      "Accept": "*/*"
+    }
+  }
+  const isAdmin = payload.status === 'admin';
+
+  try{
+    if(payload.image.length>0){
+      const image = payload.image[0];
+      const uploadTask = storage.ref(`images/${image.name}`).put(image);
+      uploadTask.on(
+        "state_changed",
+        snapshot => {},
+        error =>{
+          console.log(error);
+        },
+        ()=>{
+          storage
+            .ref("images")
+            .child(image.name)
+            .getDownloadURL()
+            .then(async(url) => {
+              const postInfo = async()=>{
+                const res = await axios.post(`${URL}/admin/movies`, {
+                  title: payload.title,
+                  year: payload.year,
+                  genre: payload.genre,
+                  synopsis: payload.synopsis,
+                  location: payload.location,
+                  img: url,
+                  rating: payload.rating,
+                  status: isAdmin?'approved':'pending',
+                  ratingFrequency: payload.ratingFrequency,          
+                },  config);
+                console.log(res.data.data);
+                return res.data.data
+                // dispatch({type: ON_SUCCESS})
+                // return res.data.data;
+              }
+              postInfo()
+            })
+        })
+    }else{
+      const res = await axios.put(`${URL}/admin/movies/${payload.id}`, {
+        title: payload.title,
+        year: payload.year,
+        genre: payload.genre,
+        synopsis: payload.synopsis,
+        location: payload.location,
+        rating: payload.rating,
+        status: isAdmin?'approved':'pending',
+        ratingFrequency: payload.ratingFrequency,
+      },  config)
+      dispatch({type: ON_SUCCESS})
+      return res.data.data;
+    }
+  }catch(error){
+    dispatch({ type: ERROR, error: error.response.data.error });
+  }
 }
 
 export async function updateMovie(dispatch, payload){
