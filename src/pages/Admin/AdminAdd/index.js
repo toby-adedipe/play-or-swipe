@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import { useAuthDispatch, useAuthState } from '../../context';
-import AddForm from '../../components/AddForm';
-import { getCurrentUser } from '../../context/actions';
-import { storage } from '../../firebase';
-import { URL } from '../../config/url';
-import AdminHeader from '../../components/AdminHeader';
+import { useAuthDispatch, useAuthState } from '../../../context';
+import AddForm from '../../../components/AddForm';
+import { getCurrentUser } from '../../../context/actions';
+import { storage } from '../../../firebase';
+import { URL } from '../../../config/url';
+import AdminHeader from '../../../components/AdminHeader';
 
 const AdminAdd = () => {
   const dispatch = useAuthDispatch();

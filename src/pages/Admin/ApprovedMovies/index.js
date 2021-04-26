@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import AdminHeader from "../../components/AdminHeader";
-import DisplayMovies from "../../containers/DisplayMovies";
-import { getAllMovies } from "../../context/actions";
-import './AllMovies.css';
+import AdminHeader from "../../../components/AdminHeader";
+import DisplayMovies from "../../../containers/DisplayMovies";
+import { getAllMovies } from "../../../context/actions";
+import './Approved.css';
 
-const AllMovies = () => {
+const ApprovedMovies = () => {
   const [movies, setMovies] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -53,4 +53,4 @@ const AllMovies = () => {
   );
 };
 
-export default AllMovies;
+export default ApprovedMovies;

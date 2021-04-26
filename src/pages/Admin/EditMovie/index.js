@@ -2,16 +2,16 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Loader from 'react-loader-spinner';
 import { useParams } from 'react-router';
-import AdminHeader from '../../components/AdminHeader';
-import Form from '../../components/Form';
-import { URL } from '../../config/url';
-import { useAuthDispatch, useAuthState } from '../../context';
-import { getMovie } from '../../context/actions';
-import { storage } from '../../firebase';
+import AdminHeader from '../../../components/AdminHeader';
+import Form from '../../../components/Form';
+import { URL } from '../../../config/url';
+import { useAuthDispatch, useAuthState } from '../../../context';
+import { getMovie } from '../../../context/actions';
+import { storage } from '../../../firebase';
 
-import './AdminMovie.css';
+import './EditMovie.css';
 
-const AdminMovie = () => {
+const EditMovie = () => {
   const {id} = useParams();
   const dispatch = useAuthDispatch();
   const { token, loading } = useAuthState();
@@ -151,7 +151,7 @@ const AdminMovie = () => {
           ?<p>An error occured</p>
           :movie
             ? <div>
-                <h3>Edit {movie.title}</h3>
+                <h3>Edit "{movie.title}"</h3>
                 {
                   success
                   ? <p className="success">Movie successfully updated</p>
@@ -166,4 +166,4 @@ const AdminMovie = () => {
   );
 };
 
-export default AdminMovie;
+export default EditMovie;

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { withRouter } from 'react-router';
-import AdminHeader from '../../components/AdminHeader';
-import DisplayMovies from '../../containers/DisplayMovies';
-import { logout, useAuthDispatch, useAuthState} from '../../context';
-import { getPendingMovies } from '../../context/actions';
+import AdminHeader from '../../../components/AdminHeader';
+import DisplayMovies from '../../../containers/DisplayMovies';
+import { logout, useAuthDispatch, useAuthState} from '../../../context';
+import { getPendingMovies } from '../../../context/actions';
 
 const AdminDashboardComponent = ({history}) => {
   const dispatch = useAuthDispatch();

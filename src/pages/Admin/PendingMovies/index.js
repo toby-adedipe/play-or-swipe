@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import AdminHeader from '../../components/AdminHeader';
-import DisplayMovies from '../../containers/DisplayMovies';
-import { useAuthDispatch, useAuthState} from '../../context';
-import { getPendingMovies } from '../../context/actions';
+import AdminHeader from '../../../components/AdminHeader';
+import DisplayMovies from '../../../containers/DisplayMovies';
+import { useAuthDispatch, useAuthState} from '../../../context';
+import { getPendingMovies } from '../../../context/actions';
 
 const PendingMovies = () => {
   const dispatch = useAuthDispatch();

@@ -8,11 +8,11 @@ import SignUp from "../pages/SignUp";
 import SearchResults from "../pages/SearchResults";
 import TopNigerian from '../pages/TopNigerianMovies';
 import Movie from '../pages/Movie';
-import AdminDashboard from '../pages/AdminDashboard';
-import AdminMovie from '../pages/AdminMovie';
-import AllMovies from '../pages/AllMovies';
-import PendingMovies from '../pages/PendingMovies';
-import AdminAdd from '../pages/AdminAdd';
+import AdminDashboard from '../pages/Admin/AdminDashboard';
+import EditMovie from '../pages/Admin/EditMovie';
+import ApprovedMovies from '../pages/Admin/ApprovedMovies';
+import PendingMovies from '../pages/Admin/PendingMovies';
+import AdminAdd from '../pages/Admin/AdminAdd';
 
 
 
@@ -86,7 +86,7 @@ const routes =[
   },
   {
     path: '/admin/movies',
-    component: AllMovies,
+    component: ApprovedMovies,
     isPrivate: true,
     type: 'admin',
   },
@@ -98,7 +98,7 @@ const routes =[
   },
   {
     path:'/admin/movies/:id',
-    component: AdminMovie,
+    component: EditMovie,
     isPrivate: true,
     type: 'admin',
   },

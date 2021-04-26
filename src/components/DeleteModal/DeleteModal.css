@@ -1,0 +1,24 @@
+.delete-modal-content{
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+.delete-modal-content h3{
+  text-align: center;
+}
+#yes-btn, #no-btn{
+  margin-right: .25rem;
+}
+.close-btn-container{
+  position: absolute;
+  right: .5rem;
+  top: .5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+#close-delete-btn{
+  font-size: 1.5rem;
+  position: relative;
+}

@@ -4,6 +4,7 @@ import { ERROR,
   GET_MOVIE_SUCCESS, 
   LOGIN_SUCCESS, 
   ON_SUCCESS, 
+  REQUEST_CHANGE, 
   REQUEST_LOGIN, 
   REQUEST_MOVIE, 
   REQUEST_SIGNUP, 
@@ -288,4 +289,22 @@ export async function updateMovie(dispatch, payload){
   }catch(error){
     dispatch({ type: ERROR, error: error.response.data.error });
   }
+}
+
+export async function deleteMovie(dispatch, payload){
+  dispatch({type: REQUEST_CHANGE});
+  let config = {
+    headers: {
+      "Authorization": `Bearer ${payload.token}`,
+      "Content-Type": "application/json",
+      "Accept": "*/*"
+    }
+  }
+  try{
+    const res = await axios.delete(`${URL}/admin/movies/${payload.id}`, config)
+    return res.data;
+  }catch(error){
+    console.log(error.response.data.error);
+  }
+
 }
