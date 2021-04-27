@@ -53,13 +53,6 @@ export async function signUp(dispatch, signupPayload){
 
 export async function updateUser(dispatch, payload){
 
-  let config = {
-    headers: {
-      "Authorization": `Bearer ${payload.token}`,
-      "Content-Type": "application/json",
-      "Accept": "*/*"
-    }
-  }
   try{
     dispatch({ type: REQUEST_UPDATE_USER });
 
@@ -68,12 +61,6 @@ export async function updateUser(dispatch, payload){
       ratingFrequency: payload.ratingFrequency,
       cookieToken: payload.cookieToken,
     })
-    if(payload.userId){
-      await axios.put(`${URL}/users/${payload.userId}`, {
-        movieId: payload.movieId,
-        rating: payload.rating,
-      }, config)
-    }
     let data = res.data;
     if(data.success){
       dispatch({ type: UPDATE_USER })
