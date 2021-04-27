@@ -6,17 +6,60 @@ import './topRated.css';
 import SearchResults from '../SearchResults';
 import Search from '../../containers/Search';
 import Header from '../../components/Header';
+import { fetchTopMovies } from '../../context/actions';
+import { useAuthDispatch } from '../../context';
+import Loader from 'react-loader-spinner';
 
 const TopRated = () => {
   const { top, searchVal } = useContext(AppContext);
   const [yearVal, setYearVal] = useState("");
+  const [response, setResponse] = useState(null);
+  const [page, setPage] = useState(1);
   const [locationVal, setLocationVal] = useState("");
   const [filterOptions, setFilterOptions] = useState(false);
   const [filteredData, setFilteredData] = useState(top);
+  const [visible, setVisible] = useState(false);
+  const dispatch = useAuthDispatch();
 
   useEffect(()=>{
-    setFilteredData(top);
-  }, [top]);
+    const fetchData = async()=>{
+      setVisible(true)
+      const payload = {
+        page: page,
+      }
+      const res = await fetchTopMovies(dispatch, payload);
+      if(res.success){
+        setResponse(res);
+        setFilteredData(res.data);
+      } 
+      setVisible(false)   
+    }
+    fetchData();
+  }, [top, dispatch, page]);
+
+  const firstPage = ()=>{
+    if(response.pagination.prev){
+      setPage(1)
+    }
+  }
+  const prev = ()=>{
+    if(response.pagination.prev){
+      setPage(response.pagination.prev.page)
+    }
+  }
+
+  const next = ()=>{
+    if(response.pagination.next){
+      setPage(response.pagination.next.page)
+    }
+  }
+  const lastPage = ()=>{
+    let num = Math.ceil(response.pagination.total/10)
+    if(response.pagination.next){
+      setPage(num)
+    }
+  }
+  
 
   const submitFilter = ()=>{
     const dataCopy = top;
@@ -38,7 +81,6 @@ const TopRated = () => {
     }
     setFilteredData(newData);
   }
-
 
   return (
     <>
@@ -85,10 +127,50 @@ const TopRated = () => {
             <div>
               {
                 filteredData
-                ? <div className="top-rated-movies"> 
-                    {filteredData.map((item)=> 
-                      <Movie key={item._id} data={item}/>)}
-                  </div>
+                ? (
+                    <>
+                    {
+                      visible
+                      ? <div className="top-spinner">
+                          <Loader 
+                            type="TailSpin"
+                            color="#EC1F41"
+                            height={40}
+                            width={40}
+                            visible={visible}
+                          />
+                        </div>
+                      : <div className="top-rated-movies"> 
+                          {filteredData.map((item)=> 
+                            <Movie key={item._id} data={item}/>)}
+                        </div>
+                    }{
+                      response.pagination
+                      ?<div className="pagination">
+                        <div className="back-btns">
+                          <button onClick={firstPage} className="prev-btn" disabled={!response.pagination.prev}>
+                            <ion-icon name="play-back"></ion-icon>
+                          </button>
+                          <button onClick={prev} className="prev-btn" disabled={!response.pagination.prev}>
+                          <ion-icon name="caret-back"></ion-icon>
+                            Prev
+                          </button> 
+                        </div>
+                        <p>{page}</p>
+                        <div className="forward-btns">
+                          <button onClick={next} className="next-btn" disabled={!response.pagination.next}>
+                            Next
+                            <ion-icon name="caret-forward"></ion-icon>
+                          </button>
+                          <button onClick={lastPage} className="next-btn" disabled={!response.pagination.next}>
+                            <ion-icon name="play-forward"></ion-icon>
+                          </button>
+                        </div>
+                      </div>
+                      : null
+                    }
+                    </>
+                  )
                 :<p>Fetching movies...</p>
               }
             </div>

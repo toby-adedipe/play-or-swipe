@@ -13,6 +13,35 @@ import { ERROR,
 } from "./constants";
 import { storage } from '../firebase';
 
+export async function fetchTopMovies(dispatch, payload){
+  try{
+    let response = await axios.get(`${URL}/movies?status=approved&limit=10&page=${payload.page}&sort=rating`)
+    return response.data;
+  }catch(error){
+    let data = error.response.data;
+    return data;
+  }
+}
+
+export async function fetchNigerian(dispatch, payload){
+  try{
+    let response = await axios.get(`${URL}/movies?page=${payload.page}&limit=10&status=approved&location=nigeria`)
+    return response.data;
+  }catch(error){
+    let data = error.response.data;
+    return data;
+  }
+}
+export async function fetchPopular(dispatch, payload){
+  try{
+    let response = await axios.get(`${URL}/movies?page=${payload.page}&limit=10&status=approved&sort=ratingFrequency`)
+    return response.data;
+  }catch(error){
+    let data = error.response.data;
+    return data;
+  }
+}
+
 export async function logIn(dispatch, loginPayload) {
   try{
     dispatch({ type: REQUEST_LOGIN });

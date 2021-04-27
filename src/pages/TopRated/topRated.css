@@ -4,6 +4,7 @@
 .top-rated-movies{
     display: grid;
     grid-gap: 0.5rem;
+    min-height: 60vh;
     grid-template-columns: repeat(auto-fill, minmax(12.25rem, 0.75fr));
 }
 .top-rated-h1{
@@ -45,7 +46,29 @@
 .filter-options-container{
     display: flex;
 }
-
+.pagination{
+    margin: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+.back-btns, .forward-btns{
+    display: flex;
+}
+.back-btns >.prev-btn, .forward-btns>.next-btn{
+    margin-right: 1rem;
+}
+.prev-btn, .next-btn{
+    padding: .5rem .75rem;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+}
+.top-spinner{
+    display: flex;
+    justify-content: center;
+    min-height: 60vh;
+}
 @media only screen and (min-width: 600px) {
     .top-header-container{
         margin: 1rem 5rem;
@@ -54,6 +77,9 @@
         margin: 0 5rem;
     }
     .filter-container{
+        margin: 1rem 5rem;
+    }
+    .pagination{
         margin: 1rem 5rem;
     }
   }
