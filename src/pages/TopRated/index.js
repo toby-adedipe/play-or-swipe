@@ -1,87 +1,77 @@
-import AppContext from '../../context/AppContext';
 import { useContext, useEffect, useState } from "react";
-import Movie from "../../containers/Movie";
+import Loader from 'react-loader-spinner';
+
 import './topRated.css';
 
+import Movie from "../../containers/Movie";
 import SearchResults from '../SearchResults';
 import Search from '../../containers/Search';
 import Header from '../../components/Header';
-import { fetchTopMovies } from '../../context/actions';
-import { useAuthDispatch } from '../../context';
-import Loader from 'react-loader-spinner';
+import AppContext from '../../context/AppContext';
+import Pagination from '../../components/Pagination';
+import { useAuthDispatch, useAuthState } from '../../context';
+import { fetchTopMovies, filterTopMovies } from '../../context/actions';
 
 const TopRated = () => {
-  const { top, searchVal } = useContext(AppContext);
+  const { searchVal } = useContext(AppContext);
   const [yearVal, setYearVal] = useState("");
-  const [response, setResponse] = useState(null);
-  const [page, setPage] = useState(1);
   const [locationVal, setLocationVal] = useState("");
   const [filterOptions, setFilterOptions] = useState(false);
-  const [filteredData, setFilteredData] = useState(top);
-  const [visible, setVisible] = useState(false);
+  const [filteredData, setFilteredData] = useState(null);
+
+  const [response, setResponse] = useState(null);
+  const [page, setPage] = useState(1);
+  const [visible, setVisible] = useState(true);
+
   const dispatch = useAuthDispatch();
+  const {errorMessage} = useAuthState();
 
   useEffect(()=>{
     const fetchData = async()=>{
       setVisible(true)
       const payload = {
+        year: yearVal,
+        location: locationVal,  
         page: page,
+        limit: "",
+        status: "approved",
       }
-      const res = await fetchTopMovies(dispatch, payload);
+      let res;
+      if(yearVal.length>0||locationVal.length>0){
+        res = await filterTopMovies(dispatch, payload);
+      }else{
+        res = await fetchTopMovies(dispatch, payload);
+      }
       if(res.success){
         setResponse(res);
         setFilteredData(res.data);
       } 
+      console.log(res)
       setVisible(false)   
     }
     fetchData();
-  }, [top, dispatch, page]);
+  }, [dispatch, page, yearVal, locationVal]);
 
-  const firstPage = ()=>{
-    if(response.pagination.prev){
-      setPage(1)
+  const submitFilter = async()=>{
+    setVisible(true)
+    const payload = {
+      year: yearVal,
+      location: locationVal,
+      page,
+      limit: "",
+      status: "approved",
     }
-  }
-  const prev = ()=>{
-    if(response.pagination.prev){
-      setPage(response.pagination.prev.page)
-    }
+    const res = await filterTopMovies(dispatch, payload);
+    if(res.success){
+      setResponse(res);
+      console.log(res);
+      setFilteredData(res.data);
+    } 
+    setVisible(false)   
   }
 
-  const next = ()=>{
-    if(response.pagination.next){
-      setPage(response.pagination.next.page)
-    }
-  }
-  const lastPage = ()=>{
-    let num = Math.ceil(response.pagination.total/10)
-    if(response.pagination.next){
-      setPage(num)
-    }
-  }
+  const getTotalPages = ()=> Math.ceil(response.pagination.total/10);
   
-
-  const submitFilter = ()=>{
-    const dataCopy = top;
-    let newData;
-    if (yearVal.length === 0 && locationVal.length > 0) {
-      newData = dataCopy.filter((item)=>{
-        return item.location === locationVal;
-      })
-    }else if (locationVal.length === 0 && yearVal.length > 0){
-      newData = dataCopy.filter((item)=>{
-        return item.year === yearVal;
-      })
-    } else if (locationVal.length > 0 && yearVal.length > 0){
-      newData = dataCopy.filter((item)=>{
-        return item.year === yearVal && item.location === locationVal;
-      })
-    }else{
-      newData = top;
-    }
-    setFilteredData(newData);
-  }
-
   return (
     <>
       <Header />
@@ -126,52 +116,40 @@ const TopRated = () => {
             }
             <div>
               {
-                filteredData
-                ? (
-                    <>
-                    {
-                      visible
-                      ? <div className="top-spinner">
-                          <Loader 
-                            type="TailSpin"
-                            color="#EC1F41"
-                            height={40}
-                            width={40}
-                            visible={visible}
-                          />
+                visible
+                ? <div className="top-spinner">
+                    <Loader 
+                      type="TailSpin"
+                      color="#EC1F41"
+                      height={40}
+                      width={40}
+                      visible={visible}
+                    />
+                  </div>
+                : filteredData
+                  ? (
+                      <>
+                        <p>{errorMessage && errorMessage}</p>
+                        <div className="top-rated-movies"> 
+                          {
+                            filteredData.length>0
+                            ?filteredData.map((item)=><Movie key={item._id} data={item}/>)
+                            :<p>There are no movies here</p>
+                          }
                         </div>
-                      : <div className="top-rated-movies"> 
-                          {filteredData.map((item)=> 
-                            <Movie key={item._id} data={item}/>)}
-                        </div>
-                    }{
-                      response.pagination
-                      ?<div className="pagination">
-                        <div className="back-btns">
-                          <button onClick={firstPage} className="prev-btn" disabled={!response.pagination.prev}>
-                            <ion-icon name="play-back"></ion-icon>
-                          </button>
-                          <button onClick={prev} className="prev-btn" disabled={!response.pagination.prev}>
-                          <ion-icon name="caret-back"></ion-icon>
-                            Prev
-                          </button> 
-                        </div>
-                        <p>{page}</p>
-                        <div className="forward-btns">
-                          <button onClick={next} className="next-btn" disabled={!response.pagination.next}>
-                            Next
-                            <ion-icon name="caret-forward"></ion-icon>
-                          </button>
-                          <button onClick={lastPage} className="next-btn" disabled={!response.pagination.next}>
-                            <ion-icon name="play-forward"></ion-icon>
-                          </button>
-                        </div>
-                      </div>
-                      : null
-                    }
-                    </>
-                  )
-                :<p>Fetching movies...</p>
+                        {
+                          response
+                            ?<Pagination
+                              response={response}
+                              page={page}
+                              setPage={setPage}
+                              getTotalPages={getTotalPages}
+                            />
+                          : null
+                        }
+                      </>
+                    )
+                  :null
               }
             </div>
           </div>

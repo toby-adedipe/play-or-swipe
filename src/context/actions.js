@@ -15,7 +15,7 @@ import { storage } from '../firebase';
 
 export async function fetchTopMovies(dispatch, payload){
   try{
-    let response = await axios.get(`${URL}/movies?status=approved&limit=10&page=${payload.page}&sort=rating`)
+    let response = await axios.get(`${URL}/movies?status=${payload.status}&limit=${payload.limit}&page=${payload.page}&sort=rating`)
     return response.data;
   }catch(error){
     let data = error.response.data;
@@ -25,7 +25,7 @@ export async function fetchTopMovies(dispatch, payload){
 
 export async function fetchNigerian(dispatch, payload){
   try{
-    let response = await axios.get(`${URL}/movies?page=${payload.page}&limit=10&status=approved&location=nigeria`)
+    let response = await axios.get(`${URL}/movies?page=${payload.page}&limit=${payload.limit}&status=${payload.status}&location=nigeria&sort=rating`)
     return response.data;
   }catch(error){
     let data = error.response.data;
@@ -34,11 +34,42 @@ export async function fetchNigerian(dispatch, payload){
 }
 export async function fetchPopular(dispatch, payload){
   try{
-    let response = await axios.get(`${URL}/movies?page=${payload.page}&limit=10&status=approved&sort=ratingFrequency`)
+    let response = await axios.get(`${URL}/movies?page=${payload.page}&limit=${payload.limit}&status=${payload.status}&sort=ratingFrequency`)
     return response.data;
   }catch(error){
     let data = error.response.data;
     return data;
+  }
+}
+
+export async function filterTopMovies(dispatch, payload){
+  try{
+    let response = await axios.get(`${URL}/movies?page=${payload.page}&status=${payload.status}&location=${payload.location}&year=${payload.year}&sort=rating`)
+    return response.data;
+  }catch(error){
+    let data = error.response.data;
+    return data;
+  }
+}
+
+export async function filterPopularMovies(dispatch, payload){
+  try{
+    let response = await axios.get(`${URL}/movies?page=${payload.page}&status=${payload.status}&location=${payload.location}&year=${payload.year}&sort=ratingFrequency`)
+    return response.data;
+  }catch(error){
+    let data = error.response.data;
+    return data;
+  }
+}
+
+export async function fetchAllMovies(dispatch, payload){
+  try{
+    let response = await axios.get(`${URL}/movies?page=${payload.page}&status=${payload.status}`)
+    return response.data;
+  }catch(error){
+    // let data = error.response.data;
+    // return data;
+    console.log(error);
   }
 }
 
@@ -110,17 +141,6 @@ export async function updateUser(dispatch, payload){
     }
   }catch(error){
     dispatch({ type: ERROR, error: error.response.data.error });
-    let data = error.response.data;
-    return data;
-  }
-}
-export async function getAllMovies(){
-  try{
-    let res = await axios.get(`${URL}/movies`)
-    let data = res.data;
-    
-    return data;
-  }catch(error){
     let data = error.response.data;
     return data;
   }

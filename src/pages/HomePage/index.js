@@ -1,19 +1,52 @@
-import { useContext, useEffect } from 'react';
-import Categories from '../../containers/Categories';
+import { useContext, useEffect, useState } from 'react';
+import Loader from 'react-loader-spinner';
+
+import './homepage.css';
+
+import SearchResults from '../SearchResults';
+import Header from '../../components/Header';
 import Search from '../../containers/Search';
 import AppContext from '../../context/AppContext';
-import SearchResults from '../SearchResults';
-import Loader from 'react-loader-spinner';
-import './homepage.css';
-import Header from '../../components/Header';
+import Categories from '../../containers/Categories';
+import { useAuthDispatch, useAuthState } from '../../context';
+import { fetchTopMovies, fetchNigerian, fetchPopular } from '../../context/actions';
 
 const HomePage = () => {
+  const [top, setTop] = useState(null);
+  const [nigerian, setNigerian] = useState(null);
+  const [popular, setPopular] = useState(null);
+  const [visible, setVisible] = useState(true);
 
-  const {popular, top, searchVal, visible, error, nigerian, handleCookie } = useContext(AppContext)
+  const { searchVal, error, handleCookie } = useContext(AppContext)
+
+  const dispatch = useAuthDispatch();
+  const {errorMessage} = useAuthState();
 
   useEffect(()=>{
+    const fetchData = async()=>{
+      setVisible(true)
+      const payload = { 
+        page: 1,
+        limit: "5",
+        status: "approved",
+      }
+      const topData = await fetchTopMovies(dispatch, payload);
+      const nigerianData = await fetchNigerian(dispatch, payload);
+      const popularData = await fetchPopular(dispatch, payload);
+      if(topData.success){
+        setTop(topData.data);
+      }
+      if(nigerianData.success){
+        setNigerian(nigerianData.data);
+      }
+      if(popularData.success){
+        setPopular(popularData.data);
+      }
+      setVisible(false)   
+    }
+    fetchData();
     handleCookie();
-  }, [handleCookie]);
+  }, [handleCookie, dispatch]);
   
   return (
     <>
@@ -24,8 +57,8 @@ const HomePage = () => {
           error
           
           ? <p>There is a problem with your internet connection</p>
-          : popular === null || (top === null || nigerian === null)
-            ? <div className="spinner-container">
+          : visible
+            ? <div className="top-spinner">
                 <Loader 
                   type="TailSpin"
                   color="#EC1F41"
@@ -36,11 +69,16 @@ const HomePage = () => {
               </div>
             : searchVal.length>0
               ? <SearchResults />
-              : <div>
-                  <Categories category="Top Rated Movies" link="/top-rated" data={top} />
-                  <Categories category="Top Rated Nigerian Movies" link="/top-nigerian" data={nigerian} />
-                  <Categories category="Popular Movies" link="/popular" data={popular} />
-                </div>         
+              : (
+                <>
+                  <p>{errorMessage && errorMessage}</p>
+                  <div>
+                    <Categories category="Top Rated Movies" link="/top-rated" data={top} />
+                    <Categories category="Top Rated Nigerian Movies" link="/top-nigerian" data={nigerian} />
+                    <Categories category="Popular Movies" link="/popular" data={popular} />
+                  </div>
+                </>
+              )     
         }
       </div>
     </>

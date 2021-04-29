@@ -64,6 +64,15 @@
     align-items: center;
     font-size: 1rem;
 }
+.prev-btn:hover, .next-btn:hover{
+    background-color: #dddddd;
+}
+.prev-btn:disabled,  .next-btn:disabled{
+    background-color: #646464;
+}
+.prev-btn:hover:disabled,  .next-btn:hover:disabled{
+    background-color: #646464;
+}
 .top-spinner{
     display: flex;
     justify-content: center;

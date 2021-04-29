@@ -1,11 +1,16 @@
 import AppContext from '../../context/AppContext';
 import { useContext, useEffect, useState } from "react";
-import Movie from "../../containers/Movie";
+import Loader from 'react-loader-spinner';
+
 import './popular.css';
 
+import Movie from "../../containers/Movie";
 import SearchResults from '../SearchResults';
 import Search from '../../containers/Search';
 import Header from '../../components/Header';
+import Pagination from '../../components/Pagination';
+import { useAuthDispatch, useAuthState } from '../../context';
+import { fetchPopular, filterPopularMovies } from '../../context/actions';
 
 const TopRated = () => {
   const { popular, searchVal } = useContext(AppContext);
@@ -14,31 +19,58 @@ const TopRated = () => {
   const [filterOptions, setFilterOptions] = useState(false);
   const [filteredData, setFilteredData] = useState(popular);
 
-  useEffect(()=>{
-    setFilteredData(popular);
-  }, [popular]);
+  const [response, setResponse] = useState(null);
+  const [page, setPage] = useState(1);
+  const [visible, setVisible] = useState(true);
 
-  const submitFilter = ()=>{
-    const dataCopy = popular;
-    let newData;
-    if (yearVal.length === 0 && locationVal.length > 0) {
-      newData = dataCopy.filter((item)=>{
-        return item.location === locationVal;
-      })
-    }else if (locationVal.length === 0 && yearVal.length > 0){
-      newData = dataCopy.filter((item)=>{
-        return item.year === yearVal;
-      })
-    } else if (locationVal.length > 0 && yearVal.length > 0){
-      newData = dataCopy.filter((item)=>{
-        return item.year === yearVal && item.location === locationVal;
-      })
-    }else{
-      newData = popular;
+  const dispatch = useAuthDispatch();
+  const {errorMessage} = useAuthState();
+
+
+  useEffect(()=>{
+    const fetchData = async()=>{
+      setVisible(true)
+      const payload = {
+        year: yearVal,
+        location: locationVal,  
+        page: page,
+        limit: "",
+        status: "approved",
+      }
+      let res;
+      if(yearVal.length>0||locationVal.length>0){
+        res = await filterPopularMovies(dispatch, payload);
+      }else{
+        res = await fetchPopular(dispatch, payload);
+      }
+      if(res.success){
+        setResponse(res);
+        setFilteredData(res.data);
+      } 
+      setVisible(false)   
     }
-    setFilteredData(newData);
+    fetchData();
+  }, [dispatch, page, yearVal, locationVal]);
+
+  const submitFilter = async()=>{
+    setVisible(true)
+    const payload = {
+      year: yearVal,
+      location: locationVal,
+      page,
+      limit: "",
+      status: "approved",
+    }
+    const res = await filterPopularMovies(dispatch, payload);
+    if(res.success){
+      setResponse(res);
+      console.log(res);
+      setFilteredData(res.data);
+    } 
+    setVisible(false)   
   }
 
+  const getTotalPages = ()=> Math.ceil(response.pagination.total/10);
 
   return (
     <>
@@ -83,13 +115,41 @@ const TopRated = () => {
               : null
             }
             <div>
-              {
-                filteredData
-                ? <div className="popular-movies"> 
-                    {filteredData.map((item)=> 
-                      <Movie key={item._id} data={item}/>)}
+            {
+                visible
+                ? <div className="top-spinner">
+                    <Loader 
+                      type="TailSpin"
+                      color="#EC1F41"
+                      height={40}
+                      width={40}
+                      visible={visible}
+                    />
                   </div>
-                :<p>Fetching movies...</p>
+                : filteredData
+                  ? (
+                      <>
+                        <p>{errorMessage && errorMessage}</p>
+                        <div className="top-rated-movies"> 
+                          {
+                            filteredData.length>0
+                            ?filteredData.map((item)=><Movie key={item._id} data={item}/>)
+                            :<p>There are no movies here</p>
+                          }
+                        </div>
+                        {
+                        response
+                          ?<Pagination
+                            response={response}
+                            page={page}
+                            setPage={setPage}
+                            getTotalPages={getTotalPages}
+                          />
+                        : null
+                      }
+                      </>
+                    )
+                  :null
               }
             </div>
           </div>

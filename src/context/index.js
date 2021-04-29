@@ -1,7 +1,7 @@
 import {
   logIn, 
   logout, 
-  getAllMovies, 
+  fetchAllMovies, 
   getCurrentUser, 
   getMovie, 
   getPendingMovies,  
@@ -14,7 +14,7 @@ export {
   useAuthDispatch, 
   logIn, 
   logout,
-  getAllMovies,
+  fetchAllMovies,
   getMovie,
   getCurrentUser,
   getPendingMovies,

@@ -14,7 +14,8 @@
   align-items: center;
   padding: .5rem .75rem;
   border-radius: 5px;
-  background: #8CB6F6;
+  background: #705CFB;
+  color: #fff;
 }
 #edit-icon{
   margin-right: 5px;

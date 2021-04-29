@@ -1,43 +1,73 @@
 import AppContext from '../../context/AppContext';
 import { useContext, useState, useEffect } from "react";
-import Movie from "../../containers/Movie";
+import Loader from 'react-loader-spinner';
+
 import './TopNigerian.css';
 
+import Movie from "../../containers/Movie";
 import SearchResults from '../SearchResults';
 import Search from '../../containers/Search';
 import Header from '../../components/Header';
+import Pagination from '../../components/Pagination';
+import { useAuthDispatch, useAuthState } from '../../context';
+import { fetchNigerian, filterTopMovies } from '../../context/actions';
 
 const TopNigerian = () => {
-  const { nigerian, searchVal } = useContext(AppContext);
+  const { searchVal } = useContext(AppContext);
   const [yearVal, setYearVal] = useState("");
-  const [locationVal, setLocationVal] = useState("nigeria");
   const [filterOptions, setFilterOptions] = useState(false);
-  const [filteredData, setFilteredData] = useState(nigerian);
+  const [filteredData, setFilteredData] = useState(null);
+
+  const [response, setResponse] = useState(null);
+  const [page, setPage] = useState(1);
+  const [visible, setVisible] = useState(true);
+
+  const dispatch = useAuthDispatch();
+  const {errorMessage} = useAuthState();
 
   useEffect(()=>{
-    setFilteredData(nigerian);
-  }, [nigerian]);
-
-  const submitFilter = ()=>{
-    const dataCopy = nigerian;
-    let newData;
-    if (yearVal.length === 0 && locationVal.length > 0) {
-      newData = dataCopy.filter((item)=>{
-        return item.location === locationVal;
-      })
-    }else if (locationVal.length === 0 && yearVal.length > 0){
-      newData = dataCopy.filter((item)=>{
-        return item.year === yearVal;
-      })
-    } else if (locationVal.length > 0 && yearVal.length > 0){
-      newData = dataCopy.filter((item)=>{
-        return item.year === yearVal && item.location === locationVal;
-      })
-    }else{
-      newData = nigerian;
+    const fetchData = async()=>{
+      setVisible(true)
+      const payload = {
+        year: yearVal,
+        location: "",  
+        page: page,
+        limit: "",
+        status: "approved",
+      }
+      let res;
+      if(yearVal.length>0){
+        res = await filterTopMovies(dispatch, payload);
+      }else{
+        res = await fetchNigerian(dispatch, payload);
+      }
+      if(res.success){
+        setResponse(res);
+        setFilteredData(res.data);
+      } 
+      setVisible(false)   
     }
-    setFilteredData(newData);
+    fetchData();
+  }, [dispatch, page, yearVal, ]);
+
+  const submitFilter = async()=>{
+    setVisible(true)
+    const payload = {
+      year: yearVal,
+      location: "",
+      page,
+      limit: "",
+      status: "approved",
+    }
+    const res = await filterTopMovies(dispatch, payload);
+    if(res.success){
+      setResponse(res);
+      console.log(res);
+      setFilteredData(res.data);
+    } 
+    setVisible(false)   
   }
+  const getTotalPages = ()=> Math.ceil(response.pagination.total/10);
 
   return (
     <>
@@ -67,15 +97,6 @@ const TopNigerian = () => {
                         <option value="2016">2016</option>
                       </select>
                     </div>
-                    <div className="filter-options">
-                      <p>Industry: </p>
-                      <select onChange={(element)=>setLocationVal(element.target.value)} value={locationVal}>
-                        <option value="" defaultValue></option>
-                        <option value="nigeria">Nollywood</option>
-                        <option value="america">Hollywood</option>
-                        <option value="others">Others</option>
-                      </select>
-                    </div>                
                   </div>
                   <button className="submit-btn" onClick={submitFilter}>Filter</button>
                 </div>
@@ -83,12 +104,40 @@ const TopNigerian = () => {
             }
             <div>
               {
-                filteredData
-                ? <div className="top-rated-movies"> 
-                    {filteredData.map((item)=> 
-                      <Movie key={item._id} data={item}/>)}
+                visible
+                ? <div className="top-spinner">
+                    <Loader 
+                      type="TailSpin"
+                      color="#EC1F41"
+                      height={40}
+                      width={40}
+                      visible={visible}
+                    />
                   </div>
-                :<p>Fetching movies...</p>
+                : filteredData
+                  ? (
+                      <>
+                        <p>{errorMessage && errorMessage}</p>
+                        <div className="top-rated-movies"> 
+                          {
+                            filteredData.length>0
+                            ?filteredData.map((item)=><Movie key={item._id} data={item}/>)
+                            :<p>There are no movies here</p>
+                          }
+                        </div>
+                        {
+                        response
+                          ?<Pagination
+                            response={response}
+                            page={page}
+                            setPage={setPage}
+                            getTotalPages={getTotalPages}
+                          />
+                        : null
+                      }
+                      </>
+                    )
+                  :null
               }
             </div>
           </div>
