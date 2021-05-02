@@ -114,7 +114,7 @@ const AdminAdd = () => {
     }
   }
 
-  const onSubmit = async(data)=>{
+  const onSubmit = async(data, e)=>{
     setLoading(true)
     const payload = {
       ...data,
@@ -124,6 +124,7 @@ const AdminAdd = () => {
       ratingFrequency,
     };
     addMovie(dispatch, payload)
+    e.target.reset();
   }
 
   return (

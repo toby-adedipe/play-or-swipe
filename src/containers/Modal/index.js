@@ -1,9 +1,11 @@
-import "./modal.css";
 import StarRatingComponent from 'react-star-rating-component';
 import { useState, useContext } from "react";
 import Loader from 'react-loader-spinner'
-import AppContext from "../../context/AppContext";
 import { Link } from "react-router-dom";
+
+import "./modal.css";
+
+import AppContext from "../../context/AppContext";
 import { useAuthState, useAuthDispatch } from "../../context";
 import { updateUser } from "../../context/actions";
 
@@ -116,7 +118,7 @@ const Modal = ({data, show, setShowModal}) => {
 								</div>
 								<p className="share-p">Share on:</p>
 								<a 
-									href={"http://twitter.com/share?url=https://fervent-noyce-1eb50f.netlify.app/&amp;text=I+gave+"+data.title+"+a+rating+of+"+persRating+"+Rate+It+Here?&amp;"} target="_blank" rel="noreferrer">
+									href={`https://twitter.com/intent/tweet?hashtags=${data.title}&hashtags=movies&original_referer=https%3A%2F%2Fplayorswipe%2F&ref_src=twsrc%5Etfw&text=I%20just%20gave%20${data.title}%20a%20rating%20of%20${persRating}%2C%20what%20do%20you%20think%3F&tw_p=tweetbutton&url=https%3A%2F%2Fplayorswipe.com&via=PlayOrSwipe`} target="_blank" rel="noreferrer">
 									<div className="twitter-container">
 										<ion-icon name="logo-twitter" id="twitter-logo"></ion-icon>
 										<div className="twitter">
@@ -124,12 +126,6 @@ const Modal = ({data, show, setShowModal}) => {
 										</div>
 									</div>
 								</a>
-								{/* <div className="facebook-container">
-									<ion-icon name="logo-facebook" id="facebook-logo"></ion-icon>
-									<div className="facebook">
-										<p> Facebook</p>
-									</div>
-								</div> */}
 								<div className="share-p">
 									<p>Or Leave a comment</p>
 									<Link to={`/movies/${data._id}`}><button className="submit-btn">Comment</button></Link>
