@@ -1,19 +1,16 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Loader from 'react-loader-spinner';
 
 import './topRated.css';
 
 import Movie from "../../containers/Movie";
-import SearchResults from '../SearchResults';
 import Search from '../../containers/Search';
 import Header from '../../components/Header';
-import AppContext from '../../context/AppContext';
 import Pagination from '../../components/Pagination';
 import { useAuthDispatch, useAuthState } from '../../context';
 import { fetchTopMovies, filterTopMovies } from '../../context/actions';
 
 const TopRated = () => {
-  const { searchVal } = useContext(AppContext);
   const [yearVal, setYearVal] = useState("");
   const [locationVal, setLocationVal] = useState("");
   const [filterOptions, setFilterOptions] = useState(false);
@@ -46,7 +43,6 @@ const TopRated = () => {
         setResponse(res);
         setFilteredData(res.data);
       } 
-      console.log(res)
       setVisible(false)   
     }
     fetchData();
@@ -77,83 +73,83 @@ const TopRated = () => {
       <Header />
       <Search />
       {
-        searchVal.length>0
-        ? <SearchResults />
-        : <div className="top-rated-page">
-            <div className="top-header-container">
-              <p className="top-rated-h1">Top Rated Movies</p>
-              <div onClick={()=>setFilterOptions(!filterOptions)}><ion-icon name="filter" id="filter-icon"></ion-icon></div>
-            </div>
-            {
-              filterOptions
-              ? <div className="filter-container">
-                  <div className="filter-options-container">
-                    <div className="filter-options">
-                      <p>Year: </p>
-                      <select onChange={(element)=>setYearVal(element.target.value)} value={yearVal}>
-                        <option value="" defaultValue></option>
-                        <option value="2021">2021</option>
-                        <option value="2020">2020</option>
-                        <option value="2019">2019</option>
-                        <option value="2018">2018</option>
-                        <option value="2017">2017</option>
-                        <option value="2016">2016</option>
-                      </select>
-                    </div>
-                    <div className="filter-options">
-                      <p>Industry: </p>
-                      <select onChange={(element)=>setLocationVal(element.target.value)} value={locationVal}>
-                        <option value="" defaultValue></option>
-                        <option value="nigeria">Nollywood</option>
-                        <option value="america">Hollywood</option>
-                        <option value="others">Others</option>
-                      </select>
-                    </div>                
+        <div className="top-rated-page">
+          <div className="top-header-container">
+            <p className="top-rated-h1">Top Rated Movies</p>
+            <div onClick={()=>setFilterOptions(!filterOptions)}><ion-icon name="filter" id="filter-icon"></ion-icon></div>
+          </div>
+          {
+            filterOptions
+            ? <div className="filter-container">
+                <div className="filter-options-container">
+                  <div className="filter-options">
+                    <p>Year: </p>
+                    <select onChange={(element)=>setYearVal(element.target.value)} value={yearVal}>
+                      <option value="" defaultValue></option>
+                      <option value="2021">2021</option>
+                      <option value="2020">2020</option>
+                      <option value="2019">2019</option>
+                      <option value="2018">2018</option>
+                      <option value="2017">2017</option>
+                      <option value="2016">2016</option>
+                    </select>
                   </div>
-                  <button className="submit-btn" onClick={submitFilter}>Filter</button>
+                  <div className="filter-options">
+                    <p>Industry: </p>
+                    <select onChange={(element)=>setLocationVal(element.target.value)} value={locationVal}>
+                      <option value="" defaultValue></option>
+                      <option value="nigeria">Nollywood</option>
+                      <option value="america">Hollywood</option>
+                      <option value="others">Others</option>
+                    </select>
+                  </div>                
                 </div>
-              : null
-            }
-            <div>
-              {
-                visible
-                ? <div className="top-spinner">
-                    <Loader 
-                      type="TailSpin"
-                      color="#EC1F41"
-                      height={40}
-                      width={40}
-                      visible={visible}
-                    />
-                  </div>
-                : filteredData
-                  ? (
-                      <>
-                        <p>{errorMessage && errorMessage}</p>
-                        <div className="top-rated-movies"> 
-                          {
-                            filteredData.length>0
-                            ?filteredData.map((item)=><Movie key={item._id} data={item}/>)
-                            :<p>There are no movies here</p>
-                          }
-                        </div>
+                <button className="submit-btn" onClick={submitFilter}>Filter</button>
+              </div>
+            : null
+          }
+          <div>
+            {
+              visible
+              ? <div className="top-spinner">
+                  <Loader 
+                    type="TailSpin"
+                    color="#EC1F41"
+                    height={40}
+                    width={40}
+                    visible={visible}
+                  />
+                </div>
+              : filteredData
+                ? (
+                    <>
+                      <p>{errorMessage && errorMessage}</p>
+                      <div className="top-rated-movies"> 
+                        {
+                          filteredData.length>0
+                          ?filteredData.map((item)=><Movie key={item._id} data={item}/>)
+                          :<p>There are no movies here</p>
+                        }
+                      </div>
+                      <div className="pagination-container">
                         {
                           response
-                            ?<Pagination
-                              response={response}
-                              page={page}
-                              setPage={setPage}
-                              getTotalPages={getTotalPages}
-                            />
+                          ?<Pagination
+                            response={response}
+                            page={page}
+                            setPage={setPage}
+                            getTotalPages={getTotalPages}
+                          />
                           : null
                         }
-                      </>
-                    )
-                  :null
-              }
-            </div>
+                      </div>
+                    </>
+                  )
+                :null
+            }
           </div>
-        }
+        </div>
+      }
     </>
   );
 };

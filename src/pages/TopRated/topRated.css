@@ -6,7 +6,9 @@
     grid-gap: 0.5rem;
     min-height: 60vh;
     grid-template-columns: repeat(auto-fill, minmax(12.25rem, 0.75fr));
+    margin: 0 1rem;
 }
+
 .top-rated-h1{
     font-weight: bold;
     font-size: 1.25rem;
@@ -46,8 +48,10 @@
 .filter-options-container{
     display: flex;
 }
+.pagination-container{
+    margin: 0 1rem;
+}
 .pagination{
-    margin: 1rem;
     display: flex;
     justify-content: space-between;
 }
@@ -88,8 +92,8 @@
     .filter-container{
         margin: 1rem 5rem;
     }
-    .pagination{
+    .pagination-container{
         margin: 1rem 5rem;
     }
-  }
+}
   

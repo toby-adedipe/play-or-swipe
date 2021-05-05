@@ -3,7 +3,6 @@ import Loader from 'react-loader-spinner';
 
 import './homepage.css';
 
-import SearchResults from '../SearchResults';
 import Header from '../../components/Header';
 import Search from '../../containers/Search';
 import AppContext from '../../context/AppContext';
@@ -17,7 +16,7 @@ const HomePage = () => {
   const [popular, setPopular] = useState(null);
   const [visible, setVisible] = useState(true);
 
-  const { searchVal, error, handleCookie } = useContext(AppContext)
+  const { error, handleCookie } = useContext(AppContext)
 
   const dispatch = useAuthDispatch();
   const {errorMessage} = useAuthState();
@@ -67,8 +66,6 @@ const HomePage = () => {
                   visible={visible}
                 />
               </div>
-            : searchVal.length>0
-              ? <SearchResults />
               : (
                 <>
                   <p>{errorMessage && errorMessage}</p>

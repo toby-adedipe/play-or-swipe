@@ -21,6 +21,10 @@
 }
 #searchIcon{
     color: #fff;
+    font-size: 1rem;
+}
+#search-btn{
+    background-color: inherit;
 }
 @media only screen and (min-width: 600px)  {
     .searchContainer{

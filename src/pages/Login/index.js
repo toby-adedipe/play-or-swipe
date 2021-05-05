@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { logIn } from "../../context";
-import "./login.css";
-import { useAuthDispatch, useAuthState } from "../../context";
-import { withRouter } from "react-router";
-import Header from "../../components/Header";
 import Loader from "react-loader-spinner";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
+
+import "./login.css";
+
+import { logIn } from "../../context";
+import { useAuthDispatch, useAuthState } from "../../context";
+import Header from "../../components/Header";
 
 const LoginComp = ({history}) => {
   const { register, handleSubmit, formState: { errors } } = useForm();

@@ -72,7 +72,17 @@ export async function fetchAllMovies(dispatch, payload){
     console.log(error);
   }
 }
+export async function searchMovies(dispatch, payload){
 
+  try{
+    let response = await axios.get(`${URL}/movies/search?page=${payload.page}&search=${payload.search}`)
+    return response.data;
+  }catch(error){
+    // let data = error.response.data;
+    // return data;
+    console.log(error);
+  }
+}
 export async function logIn(dispatch, loginPayload) {
   try{
     dispatch({ type: REQUEST_LOGIN });

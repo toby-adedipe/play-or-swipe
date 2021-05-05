@@ -1,11 +1,9 @@
-import AppContext from '../../context/AppContext';
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Loader from 'react-loader-spinner';
 
 import './popular.css';
 
 import Movie from "../../containers/Movie";
-import SearchResults from '../SearchResults';
 import Search from '../../containers/Search';
 import Header from '../../components/Header';
 import Pagination from '../../components/Pagination';
@@ -13,11 +11,10 @@ import { useAuthDispatch, useAuthState } from '../../context';
 import { fetchPopular, filterPopularMovies } from '../../context/actions';
 
 const TopRated = () => {
-  const { popular, searchVal } = useContext(AppContext);
   const [yearVal, setYearVal] = useState("");
   const [locationVal, setLocationVal] = useState("");
   const [filterOptions, setFilterOptions] = useState(false);
-  const [filteredData, setFilteredData] = useState(popular);
+  const [filteredData, setFilteredData] = useState(null);
 
   const [response, setResponse] = useState(null);
   const [page, setPage] = useState(1);
@@ -77,44 +74,42 @@ const TopRated = () => {
       <Header />
       <Search />
       {
-        searchVal.length>0
-        ? <SearchResults />
-        : <div className="popular-page">
-            <div className="top-header-container">
-              <p className="popular-h1">Popular Movies</p>
-              <div onClick={()=>setFilterOptions(!filterOptions)}><ion-icon name="filter" id="filter-icon"></ion-icon></div>
-            </div>
-            {
-              filterOptions
-              ? <div className="filter-container">
-                  <div className="filter-options-container">
-                    <div className="filter-options">
-                      <p>Year: </p>
-                      <select onChange={(element)=>setYearVal(element.target.value)} value={yearVal}>
-                        <option value="" defaultValue></option>
-                        <option value="2021">2021</option>
-                        <option value="2020">2020</option>
-                        <option value="2019">2019</option>
-                        <option value="2018">2018</option>
-                        <option value="2017">2017</option>
-                        <option value="2016">2016</option>
-                      </select>
-                    </div>
-                    <div className="filter-options">
-                      <p>Industry: </p>
-                      <select onChange={(element)=>setLocationVal(element.target.value)} value={locationVal}>
-                        <option value="" defaultValue></option>
-                        <option value="nigeria">Nollywood</option>
-                        <option value="america">Hollywood</option>
-                        <option value="others">Others</option>
-                      </select>
-                    </div>                
+        <div className="popular-page">
+          <div className="top-header-container">
+            <p className="popular-h1">Popular Movies</p>
+            <div onClick={()=>setFilterOptions(!filterOptions)}><ion-icon name="filter" id="filter-icon"></ion-icon></div>
+          </div>
+          {
+            filterOptions
+            ? <div className="filter-container">
+                <div className="filter-options-container">
+                  <div className="filter-options">
+                    <p>Year: </p>
+                    <select onChange={(element)=>setYearVal(element.target.value)} value={yearVal}>
+                      <option value="" defaultValue></option>
+                      <option value="2021">2021</option>
+                      <option value="2020">2020</option>
+                      <option value="2019">2019</option>
+                      <option value="2018">2018</option>
+                      <option value="2017">2017</option>
+                      <option value="2016">2016</option>
+                    </select>
                   </div>
-                  <button className="submit-btn" onClick={submitFilter}>Filter</button>
+                  <div className="filter-options">
+                    <p>Industry: </p>
+                    <select onChange={(element)=>setLocationVal(element.target.value)} value={locationVal}>
+                      <option value="" defaultValue></option>
+                      <option value="nigeria">Nollywood</option>
+                      <option value="america">Hollywood</option>
+                      <option value="others">Others</option>
+                    </select>
+                  </div>                
                 </div>
-              : null
-            }
-            <div>
+                <button className="submit-btn" onClick={submitFilter}>Filter</button>
+              </div>
+            : null
+          }
+          <div>
             {
                 visible
                 ? <div className="top-spinner">
@@ -137,23 +132,25 @@ const TopRated = () => {
                             :<p>There are no movies here</p>
                           }
                         </div>
-                        {
-                        response
-                          ?<Pagination
-                            response={response}
-                            page={page}
-                            setPage={setPage}
-                            getTotalPages={getTotalPages}
-                          />
-                        : null
-                      }
+                        <div className="pagination-container">
+                          {
+                            response
+                            ?<Pagination
+                              response={response}
+                              page={page}
+                              setPage={setPage}
+                              getTotalPages={getTotalPages}
+                            />
+                            : null
+                          }
+                        </div>
                       </>
                     )
                   :null
               }
             </div>
-          </div>
-        }
+        </div>
+      }
     </>
   );
 };
