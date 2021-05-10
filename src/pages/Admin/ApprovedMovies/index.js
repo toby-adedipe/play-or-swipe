@@ -8,6 +8,7 @@ import DisplayMovies from "../../../containers/DisplayMovies";
 import { useAuthDispatch, useAuthState } from '../../../context';
 import { fetchAllMovies } from "../../../context/actions";
 import Pagination from "../../../components/Pagination";
+import AdminSearch from "../../../containers/AdminSearch";
 
 const ApprovedMovies = () => {
   const [movies, setMovies] = useState(null);
@@ -41,6 +42,7 @@ const ApprovedMovies = () => {
     <>
       <AdminHeader />
       <div className="dashboard">
+        <AdminSearch />
         <div className="dashboard-container">
           <p style={{textAlign: 'center'}}>Here's a list of Approved movies</p>
           {

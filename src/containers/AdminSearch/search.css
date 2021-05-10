@@ -1,0 +1,33 @@
+.searchContainer{
+    margin: 1rem;
+}
+#search{
+    width: calc(100% - 1rem);
+    height: 1.25rem;
+    border-radius: 10px;
+    background-color: #2B2B2B;
+    margin: 1rem 0;
+    padding: .5rem;
+    display: flex;
+    align-items: center;
+}
+#search input{
+    background-color: #2B2B2B;
+    color: #fff;
+    width: 100%;
+}
+#search input:focus{
+    outline: none;
+}
+#searchIcon{
+    color: #fff;
+    font-size: 1rem;
+}
+#search-btn{
+    background-color: inherit;
+}
+@media only screen and (min-width: 600px)  {
+    .searchContainer{
+        margin: 1rem 5rem;
+    }
+}

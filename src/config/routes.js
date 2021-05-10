@@ -13,8 +13,7 @@ import EditMovie from '../pages/Admin/EditMovie';
 import ApprovedMovies from '../pages/Admin/ApprovedMovies';
 import PendingMovies from '../pages/Admin/PendingMovies';
 import AdminAdd from '../pages/Admin/AdminAdd';
-
-
+import AdminSearchResults from '../pages/Admin/AdminSearchResults';
 
 const routes =[
   {
@@ -105,6 +104,12 @@ const routes =[
   {
     path:'/admin/add',
     component: AdminAdd,
+    isPrivate: true,
+    type: 'admin',
+  },
+  {
+    path:'/search-results',
+    component: AdminSearchResults,
     isPrivate: true,
     type: 'admin',
   },

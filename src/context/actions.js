@@ -73,7 +73,17 @@ export async function fetchAllMovies(dispatch, payload){
   }
 }
 export async function searchMovies(dispatch, payload){
+  try{
+    let response = await axios.get(`${URL}/movies/search?page=${payload.page}&search=${payload.search}&status=approved`)
+    return response.data;
+  }catch(error){
+    // let data = error.response.data;
+    // return data;
+    console.log(error);
+  }
+}
 
+export async function searchAdminMovies(dispatch, payload){
   try{
     let response = await axios.get(`${URL}/movies/search?page=${payload.page}&search=${payload.search}`)
     return response.data;
@@ -83,6 +93,7 @@ export async function searchMovies(dispatch, payload){
     console.log(error);
   }
 }
+
 export async function logIn(dispatch, loginPayload) {
   try{
     dispatch({ type: REQUEST_LOGIN });

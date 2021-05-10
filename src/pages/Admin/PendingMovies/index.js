@@ -6,6 +6,7 @@ import DisplayMovies from '../../../containers/DisplayMovies';
 import { useAuthDispatch, useAuthState} from '../../../context';
 import { fetchAllMovies } from '../../../context/actions';
 import Pagination from "../../../components/Pagination";
+import AdminSearch from '../../../containers/AdminSearch';
 
 const PendingMovies = () => {
   const [movies, setMovies] = useState([]);
@@ -42,6 +43,7 @@ const PendingMovies = () => {
   return (
     <>
       <AdminHeader />
+      <AdminSearch />
       <div className="dashboard">
         <div className="dashboard-container">
           <h3>Welcome {user}!!!</h3>

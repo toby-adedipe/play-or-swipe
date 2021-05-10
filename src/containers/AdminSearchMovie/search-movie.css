@@ -1,0 +1,42 @@
+.search-results-movie{
+  cursor: pointer;
+}
+.search-results-movie>hr{
+  background-color: #2b2b2b;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+.search-container{
+  display: flex;
+}
+.art-container{
+  flex: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.search-results-image{
+  width: 8rem;
+  height: 12rem;
+  border-radius: 10px;
+  margin-bottom: .5rem;
+}
+.search-movie-info{
+  flex: 80%;
+  margin-left: .5rem;
+}
+.search-title{
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+.search-synopsis{
+  margin-bottom: .5rem;
+}
+.search-rating-container{
+  display: flex;
+  align-items: center;
+}
+.search-rating-container>p{
+  margin-top: .5rem;
+  margin-left: .75rem;
+}
