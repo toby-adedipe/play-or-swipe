@@ -26,7 +26,7 @@ const HomePage = () => {
       setVisible(true)
       const payload = { 
         page: 1,
-        limit: "5",
+        limit: "10",
         status: "approved",
       }
       const topData = await fetchTopMovies(dispatch, payload);
